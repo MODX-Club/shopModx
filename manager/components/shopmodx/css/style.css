@@ -1,0 +1,19 @@
+.icon-shopmodxcategory .x-tree-node-icon {
+	background-image: url(../img/storehouse16x16.png) !important;
+}
+
+.icon-shopmodxproducer .x-tree-node-icon {
+	background-image: url(../img/partner16x16.png) !important;
+}
+
+.icon-shopmodxproduct .x-tree-node-icon {
+	background-image: url(../img/door.png) !important;
+}
+
+
+
+
+/*.icon-phptemplateresource.icon-folder .x-tree-node-icon {
+/*.icon-phptemplateresource.icon-folder .x-tree-node-icon {
+	background-image: url(../../img/phptemplates_folder.png) !important;
+}*/

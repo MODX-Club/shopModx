@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="shopModx" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" version="1.1">
+	<object class="SiteContent" table="site_content" extends="xPDOSimpleObject">
+		<field key="type" dbtype="varchar" precision="20" phptype="string" null="false" default="document" />
+		<field key="contentType" dbtype="varchar" precision="50" phptype="string" null="false" default="text/html" />
+		<field key="pagetitle" dbtype="varchar" precision="255" phptype="string" null="false" default="" index="index" />
+		<field key="longtitle" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="alias" dbtype="varchar" precision="255" phptype="string" null="true" default="" index="index" />
+		<field key="link_attributes" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="published" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" index="index" />
+		<field key="pub_date" dbtype="int" precision="20" phptype="integer" null="false" default="0" index="index" />
+		<field key="unpub_date" dbtype="int" precision="20" phptype="integer" null="false" default="0" index="index" />
+		<field key="parent" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+		<field key="isfolder" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" index="index" />
+		<field key="introtext" dbtype="text" phptype="string" null="true" />
+		<field key="content" dbtype="mediumtext" phptype="string" null="true" />
+		<field key="richtext" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="1" />
+		<field key="template" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+		<field key="menuindex" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+		<field key="searchable" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="1" index="index" />
+		<field key="cacheable" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="1" index="index" />
+		<field key="createdby" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="createdon" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="editedby" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="editedon" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="deleted" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+		<field key="deletedon" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="deletedby" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="publishedon" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+		<field key="publishedby" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="menutitle" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+		<field key="donthit" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+		<field key="privateweb" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+		<field key="privatemgr" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+		<field key="content_dispo" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" />
+		<field key="hidemenu" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" index="index" />
+		<field key="class_key" dbtype="varchar" precision="100" phptype="string" null="false" default="modDocument" index="index" />
+		<field key="context_key" dbtype="varchar" precision="100" phptype="string" null="false" default="web" index="index" />
+		<field key="content_type" dbtype="int" precision="11" attributes="unsigned" phptype="integer" null="false" default="1" />
+		<field key="uri" dbtype="text" phptype="string" null="true" index="index" />
+		<field key="uri_override" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" index="index" />
+		<field key="hide_children_in_tree" dbtype="tinyint" precision="1" phptype="integer" null="false" default="0" index="index" />
+		<field key="show_in_tree" dbtype="tinyint" precision="1" phptype="integer" null="false" default="1" index="index" />
+		<field key="properties" dbtype="mediumtext" phptype="string" null="true" />
+
+		<index alias="alias" name="alias" primary="false" unique="false" type="BTREE" >
+			<column key="alias" length="" collation="A" null="true" />
+		</index>
+		<index alias="published" name="published" primary="false" unique="false" type="BTREE" >
+			<column key="published" length="" collation="A" null="false" />
+		</index>
+		<index alias="pub_date" name="pub_date" primary="false" unique="false" type="BTREE" >
+			<column key="pub_date" length="" collation="A" null="false" />
+		</index>
+		<index alias="unpub_date" name="unpub_date" primary="false" unique="false" type="BTREE" >
+			<column key="unpub_date" length="" collation="A" null="false" />
+		</index>
+		<index alias="parent" name="parent" primary="false" unique="false" type="BTREE" >
+			<column key="parent" length="" collation="A" null="false" />
+		</index>
+		<index alias="isfolder" name="isfolder" primary="false" unique="false" type="BTREE" >
+			<column key="isfolder" length="" collation="A" null="false" />
+		</index>
+		<index alias="template" name="template" primary="false" unique="false" type="BTREE" >
+			<column key="template" length="" collation="A" null="false" />
+		</index>
+		<index alias="menuindex" name="menuindex" primary="false" unique="false" type="BTREE" >
+			<column key="menuindex" length="" collation="A" null="false" />
+		</index>
+		<index alias="searchable" name="searchable" primary="false" unique="false" type="BTREE" >
+			<column key="searchable" length="" collation="A" null="false" />
+		</index>
+		<index alias="cacheable" name="cacheable" primary="false" unique="false" type="BTREE" >
+			<column key="cacheable" length="" collation="A" null="false" />
+		</index>
+		<index alias="hidemenu" name="hidemenu" primary="false" unique="false" type="BTREE" >
+			<column key="hidemenu" length="" collation="A" null="false" />
+		</index>
+		<index alias="class_key" name="class_key" primary="false" unique="false" type="BTREE" >
+			<column key="class_key" length="" collation="A" null="false" />
+		</index>
+		<index alias="context_key" name="context_key" primary="false" unique="false" type="BTREE" >
+			<column key="context_key" length="" collation="A" null="false" />
+		</index>
+		<index alias="uri" name="uri" primary="false" unique="false" type="BTREE" >
+			<column key="uri" length="333" collation="A" null="true" />
+		</index>
+		<index alias="uri_override" name="uri_override" primary="false" unique="false" type="BTREE" >
+			<column key="uri_override" length="" collation="A" null="false" />
+		</index>
+		<index alias="hide_children_in_tree" name="hide_children_in_tree" primary="false" unique="false" type="BTREE" >
+			<column key="hide_children_in_tree" length="" collation="A" null="false" />
+		</index>
+		<index alias="show_in_tree" name="show_in_tree" primary="false" unique="false" type="BTREE" >
+			<column key="show_in_tree" length="" collation="A" null="false" />
+		</index>
+		<index alias="cache_refresh_idx" name="cache_refresh_idx" primary="false" unique="false" type="BTREE" >
+			<column key="parent" length="" collation="A" null="false" />
+			<column key="menuindex" length="" collation="A" null="false" />
+			<column key="id" length="" collation="A" null="false" />
+		</index>
+		<index alias="content_ft_idx" name="content_ft_idx" primary="false" unique="false" type="FULLTEXT" >
+			<column key="pagetitle" length="" collation="" null="false" />
+			<column key="longtitle" length="" collation="" null="false" />
+			<column key="description" length="" collation="" null="false" />
+			<column key="introtext" length="" collation="" null="true" />
+			<column key="content" length="" collation="" null="true" />
+		</index>
+	</object>
+</model>
