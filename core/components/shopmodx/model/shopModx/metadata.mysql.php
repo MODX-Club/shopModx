@@ -3,9 +3,13 @@
 $xpdo_meta_map = array (
   'modResource' => 
   array (
-    // 'shopModxResource',
-    'shopModxProduct',
-    'shopModxProducer',
-    'shopModxCategory',
+    //'ShopmodxResourc',
+    'ShopmodxResourceProduct',
+    'ShopmodxResourceProducer',
+    //'ShopmodxResourceCategory',
+    'ShopmodxResourceWarehouse',
+    //'ShopmodxResourceVendor',
+    'ShopmodxResourceLegalForm',
+    'ShopmodxResourceClient',
   ),
 );

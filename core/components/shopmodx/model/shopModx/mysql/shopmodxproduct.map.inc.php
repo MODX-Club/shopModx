@@ -1,12 +1,22 @@
 <?php
-$xpdo_meta_map['shopModxProduct']= array (
+$xpdo_meta_map['ShopmodxProduct']= array (
   'package' => 'shopModx',
   'version' => '1.1',
-  'extends' => 'shopModxResource',
+  'table' => 'shopmodx_products',
+  'extends' => 'ShopmodxSimpleObject',
   'fields' => 
   array (
-      'class_key' => 'shopModxProduct',
+    'sm_name' => '',
   ),
   'fieldMeta' => 
-  array (),
+  array (
+    'sm_name' =>
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => '',
+    ),
+  ),
 );

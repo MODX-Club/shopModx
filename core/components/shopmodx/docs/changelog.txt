@@ -1,0 +1,13 @@
+shopModx-0.0.1-beta
+========================================
+- Added plugin shopModx
+- Added system event OnShopModxSetResourcesCreateRules
+- Added shopModx service
+- Added CRC:
+    ShopmodxCategory,
+    ShopmodxClient,
+    ShopmodxLegalForm,
+    ShopmodxProducer,
+    ShopmodxProduct,
+    ShopmodxVendor,
+    ShopmodxWarehouse,

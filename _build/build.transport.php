@@ -10,7 +10,7 @@ define('NAMESPACE_NAME', PKG_NAME_LOWER);
 define('PKG_PATH', PKG_NAME_LOWER);
 define('PKG_CATEGORY', PKG_NAME);
 
-$pkg_version = '1.0.0';
+$pkg_version = '0.0.1';
 $pkg_release = 'beta';
 define('PKG_VERSION', $pkg_version); 
 define('PKG_RELEASE', $pkg_release); 
@@ -84,6 +84,22 @@ $modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($settings).' system setting
 unset($settings,$setting,$attributes);
 
 
+/* create system settings */
+$events = include_once $sources['data'].'transport.events.php';
+$attributes= array(
+    xPDOTransport::UNIQUE_KEY => 'name',
+    xPDOTransport::PRESERVE_KEYS => true,
+    xPDOTransport::UPDATE_OBJECT => false,
+);
+if (!is_array($events)) { $modx->log(modX::LOG_LEVEL_ERROR,'Adding events failed.'); }
+foreach ($events as $event) {
+    $vehicle = $builder->createVehicle($event,$attributes);
+    $builder->putVehicle($vehicle);
+}
+$modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($events).' system events.'); flush();
+unset($events,$event,$attributes);
+
+
 /* create category */
 $category= $modx->newObject('modCategory');
 $category->set('id',1);
@@ -93,7 +109,7 @@ $modx->log(modX::LOG_LEVEL_INFO,'Packaged in category.'); flush();
 
 
 /* add plugins */
-/*$plugins = include $sources['data'].'transport.plugins.php';
+$plugins = include $sources['data'].'transport.plugins.php';
 if (!is_array($plugins)) { $modx->log(modX::LOG_LEVEL_FATAL,'Adding plugins failed.'); } 
 else{
     $category->addMany($plugins);
@@ -173,7 +189,22 @@ $vehicle->resolve('file',array(
     'target' => "return MODX_ASSETS_PATH . 'components/';",
 ));
 $modx->log(modX::LOG_LEVEL_INFO,'Packaged in AssetsPath'); flush();
+
+// Add assets source
+$vehicle->resolve('file',array(
+    'source' => $sources['source_manager'],
+    'target' => "return MODX_MANAGER_PATH . 'components/';",
+));
+$modx->log(modX::LOG_LEVEL_INFO,'Packaged in AssetsPath'); flush();
  
+// Register
+$vehicle->resolve('php',array(
+    'source' => $sources['resolvers'] . 'resolve.register.php',
+));
+
+$vehicle->resolve('php',array(
+    'source' => $sources['resolvers'] . 'resolve.tables.php',
+));
 
 $modx->log(modX::LOG_LEVEL_INFO,'Packaged in resolvers.'); 
 

@@ -16,15 +16,25 @@ switch($modx->event->name){
                 "
         , true);*/
         
+        $resourcesRules = array();
+        
+        $eventParams = array(
+            'params' => array(
+                'resourcesRules' => & $resourcesRules
+            ),
+        );
+        
+        $modx->invokeEvent('OnShopModxSetResourcesCreateRules', $eventParams);
+         
+        $resourcesRulesJSON = $modx->toJSON($resourcesRules);
+        
 $JS = <<<JS
 <script type="text/javascript">
 Ext.onReady(function(){
     // Получаем дерево
     var tree = Ext.getCmp('modx-resource-tree');
     // Описываем правила разрешенных дочерних ресурсов
-    var resourcesRules = {
-        // modDocument: ['modStaticResource', 'modDocument']
-    };
+    var resourcesRules = {$resourcesRulesJSON};
     // Прописываем функцию копирования значений объекта,
     // так как у нас проблемы на уровне ссылок на объекты,
     // то есть изменяя одну переменную, изменяется и другая, если объект общий
