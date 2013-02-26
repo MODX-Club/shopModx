@@ -1,3 +1,11 @@
+shopModx-0.0.2-beta
+========================================
+- [#1] Merged CRC tables
+- Remove CRC:
+    ShopmodxCategory,
+    ShopmodxProducer,
+    ShopmodxVendor,
+
 shopModx-0.0.1-beta
 ========================================
 - Added plugin shopModx

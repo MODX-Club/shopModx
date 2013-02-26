@@ -13,6 +13,22 @@ class ShopmodxResource extends modResource{
         return parent::__construct($xpdo);
     }
     
+    public static function load(xPDO & $xpdo, $className, $criteria= null, $cacheFlag= true){
+        if (!is_object($criteria)) {
+            $criteria= $xpdo->getCriteria($className, $criteria, $cacheFlag);
+        }
+        $xpdo->addDerivativeCriteria($className, $criteria);
+        return parent::load($xpdo, $className, $criteria, $cacheFlag);
+    }
+    
+    public static function loadCollection(xPDO & $xpdo, $className, $criteria= null, $cacheFlag= true){
+        if (!is_object($criteria)) {
+            $criteria= $xpdo->getCriteria($className, $criteria, $cacheFlag);
+        }
+        $xpdo->addDerivativeCriteria($className, $criteria);
+        return parent::loadCollection($xpdo, $className, $criteria, $cacheFlag);
+    }
+    
     /*
      * Add reference object
      */

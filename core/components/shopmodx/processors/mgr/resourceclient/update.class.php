@@ -7,7 +7,6 @@ class ShopmodxResourceClientUpdateProcessor extends ShopmodxResourceUpdateProces
     public $objectType = 'shopmodxresourceclient';
     
     public function beforeSet(){
-        
         if(!$this->getProperty('longtitle')){
             $this->addFieldError('longtitle',$message = 'Укажите расширенный заголовок');
         }
@@ -18,10 +17,21 @@ class ShopmodxResourceClientUpdateProcessor extends ShopmodxResourceUpdateProces
         
         //  set related object data
         $ro_data = array(
+            'sm_name' => $this->getProperty('pagetitle'),
             'sm_fullname' => $this->getProperty('longtitle'),
         );
+        
         $this->setProperties($ro_data);
         return parent::beforeSet();
+    }
+    
+    public function beforeSave() {
+        $cansave = $this->getRelatedObject();
+        if($cansave != true){
+            return $cansave;
+        }
+        
+        return parent::beforeSave();
     }
 }
 return 'ShopmodxResourceClientUpdateProcessor';

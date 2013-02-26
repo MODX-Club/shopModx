@@ -6,6 +6,7 @@ $xpdo_meta_map['ShopmodxClient']= array (
   'extends' => 'ShopmodxSimpleObject',
   'fields' => 
   array (
+    'class_key' => 'ShopmodxClient',
     'sm_name' => '',
     'sm_fullname' => NULL,
     'sm_is_customer' => '0',
