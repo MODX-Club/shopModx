@@ -10,13 +10,8 @@ if ($object->xpdo) {
 
             $manager = $modx->getManager();
             $modx->setLogLevel(modX::LOG_LEVEL_ERROR);
-            $manager->createObjectContainer('ShopmodxCategory');
+            $manager->createObjectContainer('ShopmodxSimpleObject');
             $manager->createObjectContainer('ShopmodxClient');
-            $manager->createObjectContainer('ShopmodxLegalForm');
-            $manager->createObjectContainer('ShopmodxProducer');
-            $manager->createObjectContainer('ShopmodxProduct');
-            $manager->createObjectContainer('ShopmodxVendor');
-            $manager->createObjectContainer('ShopmodxWarehouse');
             $modx->setLogLevel(modX::LOG_LEVEL_INFO);
             break;
     }

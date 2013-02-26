@@ -25,10 +25,21 @@ class ShopmodxResourceClientCreateProcessor extends ShopmodxResourceCreateProces
         
         //  set related object data
         $ro_data = array(
+            'sm_name' => $this->getProperty('pagetitle'),
             'sm_fullname' => $this->getProperty('longtitle'),
         );
+        
         $this->setProperties($ro_data);
         return parent::beforeSet();
+    } 
+    
+    public function beforeSave() {
+        $cansave = $this->getRelatedObject();
+        if($cansave != true){
+            return $cansave;
+        }
+        
+        return parent::beforeSave();
     }
 }
 return 'ShopmodxResourceClientCreateProcessor';

@@ -1,3 +1,3 @@
 <?php
-$location = 'legalform/';
+$location = 'resourcelegalform/';
 require_once dirname(__FILE__).'/index.php';

@@ -5,11 +5,14 @@ Shopmodx.combo.LegalForms = function(config){
         ,name: 'sm_legal_form'
         ,hiddenName: 'sm_legal_form'
         ,width: 200
-        ,url: Shopmodx.connectors_url + 'legalform.php'
-        ,displayField: 'sm_name'
-        ,fields: ['id','sm_name']
+        ,url: Shopmodx.connectors_url + 'resourcelegalform.php'
+        ,displayField: 'pagetitle'
+        ,fields: ['id','pagetitle']
         ,allowBlank: false
         ,panel: Ext.getCmp('modx-panel-resource')
+        ,baseParams: {
+            action: 'getComboList'
+        }
     });
     Shopmodx.combo.LegalForms.superclass.constructor.call(this,config);
     this.config = config;

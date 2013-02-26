@@ -2,23 +2,13 @@
 $xpdo_meta_map['ShopmodxLegalForm']= array (
   'package' => 'shopModx',
   'version' => '1.1',
-  'table' => 'shopmodx_legal_forms',
   'extends' => 'ShopmodxSimpleObject',
   'fields' => 
   array (
-    'sm_name' => '',
+    'class_key' => 'ShopmodxLegalForm',
   ),
   'fieldMeta' => 
-  array (
-    'sm_name' => 
-    array (
-      'dbtype' => 'varchar',
-      'precision' => '255',
-      'phptype' => 'string',
-      'null' => false,
-      'default' => '',
-    ),
-  ),
+  array (),
   'indexes' => 
   array (),
   'aggregates' => array(
