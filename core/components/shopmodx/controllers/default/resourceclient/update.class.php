@@ -2,13 +2,12 @@
 require_once dirname(dirname(__FILE__)).'/resource/update.class.php';
 class ShopxResourceClientUpdateManagerController extends ShopxResourceUpdateManagerController{
     public function _loadCustomCssJs() {
-        //  parent::loadCustomCssJs();
+        $this->loadCoreJS();
         
         $assetsUrl = $this->getAssetsUrl();
         $jsUrl = $assetsUrl.'js/';
         
-        $this->modx->regClientStartupScript($jsUrl.'core/shopmodx.js');
-        $this->modx->regClientStartupScript($jsUrl.'widgets/legalforms.combo.js');
+        $this->modx->regClientStartupScript($jsUrl.'widgets/combo/legalforms.combo.js');
         return true;
     }      
     

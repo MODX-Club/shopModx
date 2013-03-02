@@ -1,10 +1,27 @@
+shopModx-0.0.3-beta
+========================================
+- Added abstract class ShopmodxObjectGetListProcessor to fix getCount() bug.
+  Bug details: [#9543] http://tracker.modx.com/issues/9543
+- Added request-class shopmodxRequest. 
+  Use optionaly only with fast memory cache-providers like Memcached and disabled
+  context aliasMap-cache via cacheOptimizer. http://modx.com/extras/package/cacheoptimizer
+  Requires only on large shops (10000+ documents).
+  Details: http://community.modx-cms.ru/blog/research/9927.html
+- Remove controllers and processors file for some CRC:
+    ShopmodxResourceWarehouse,
+    ShopmodxResourceProductModel,
+    ShopmodxResourceLegalForm,
+    ShopmodxResourceCurrency
+    
+
 shopModx-0.0.2-beta
 ========================================
 - [#1] Merged CRC tables
 - Remove CRC:
     ShopmodxCategory,
     ShopmodxProducer,
-    ShopmodxVendor,
+    ShopmodxVendor
+
 
 shopModx-0.0.1-beta
 ========================================

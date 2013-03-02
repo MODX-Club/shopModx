@@ -34,3 +34,13 @@ $_lang['shopmodx.resource_legalform_create_here'] = "Legal form";
 $_lang['shopmodx.resource_client'] = "Client";
 $_lang['shopmodx.resource_client_create'] = "Client";
 $_lang['shopmodx.resource_client_create_here'] = "Client";
+
+// Currency
+$_lang['shopmodx.resource_currency'] = "Currency";
+$_lang['shopmodx.resource_currency_create'] = "Currency";
+$_lang['shopmodx.resource_currency_create_here'] = "Currency";
+
+// ProductModel
+$_lang['shopmodx.resource_productmodel'] = "Product model";
+$_lang['shopmodx.resource_productmodel_create'] = "Product model";
+$_lang['shopmodx.resource_productmodel_create_here'] = "Product model";

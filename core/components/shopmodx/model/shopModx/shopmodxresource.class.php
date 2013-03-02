@@ -55,7 +55,7 @@ class ShopmodxResource extends modResource{
     }
     
     public static function getControllerPath(xPDO &$modx) {
-        return self::_getControllerPath('resource');
+        return self::_getControllerPath($modx, 'resource');
     }
     
     public static function _getControllerPath(xPDO &$modx, $path){

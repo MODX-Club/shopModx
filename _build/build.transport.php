@@ -10,7 +10,7 @@ define('NAMESPACE_NAME', PKG_NAME_LOWER);
 define('PKG_PATH', PKG_NAME_LOWER);
 define('PKG_CATEGORY', PKG_NAME);
 
-$pkg_version = '0.0.2';
+$pkg_version = '0.0.3';
 $pkg_release = 'beta';
 define('PKG_VERSION', $pkg_version); 
 define('PKG_RELEASE', $pkg_release); 
@@ -69,7 +69,7 @@ unset($vehicle,$namespace);*/
 
 
 /* load system settings */
-/*$settings = include_once $sources['data'].'transport.settings.php';
+$settings = include_once $sources['data'].'transport.settings.php';
 $attributes= array(
     xPDOTransport::UNIQUE_KEY => 'key',
     xPDOTransport::PRESERVE_KEYS => true,
@@ -84,7 +84,7 @@ $modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($settings).' system setting
 unset($settings,$setting,$attributes);
 
 
-/* create system settings */
+/* create system events */
 $events = include_once $sources['data'].'transport.events.php';
 $attributes= array(
     xPDOTransport::UNIQUE_KEY => 'name',

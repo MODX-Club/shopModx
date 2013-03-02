@@ -1,34 +1,44 @@
 <?php
 
+/*
+ * ShopxResourceCreateManagerController
+ * ShopxResourceProductModelCreateManagerController
+ * ShopxResourceWarehouseCreateManagerController
+ * ShopxResourceLegalFormCreateManagerController
+ * ShopxResourceCurrencyCreateManagerController
+ */
+
 require_once MODX_MANAGER_PATH. "controllers/default/resource/create.class.php";
 
 class ShopxResourceCreateManagerController extends ResourceCreateManagerController{
+    public $assetsUrl;
+    
     public function loadCustomCssJs() {
         parent::loadCustomCssJs();
         return $this->_loadCustomCssJs();
     }    
     
-    public function _loadCustomCssJs(){
-                $JS = <<<JS
-        <script type="text/javascript">   
-            Ext.onReady(function(){
-                var tabs = Ext.getCmp('modx-resource-tabs');
-                tabs. add({
-                    title: 'Дополнительные данные'
-                })
-            });
-        </script>
-JS;
-        $this->modx->regClientStartupScript($JS, true);
-        return;
-    }
+    public function _loadCustomCssJs(){return true;}
     
     public function getAssetsUrl(){
-        if(!$url = $this->modx->getOption('shopmodx.manager_url')){
-            $url = $this->modx->getOption('manager_url').'components/shopmodx/';
+        if(!$this->assetsUrl AND !$this->assetsUrl = $this->modx->getOption('shopmodx.manager_url')){
+            $this->assetsUrl = $this->modx->getOption('manager_url').'components/shopmodx/';
         }
-        return $url;
+        return $this->assetsUrl;
     }
+    
+    public function loadCoreJS(){
+        $assetsUrl = $this->getAssetsUrl();
+        $jsUrl = $assetsUrl.'js/';
+        $this->modx->regClientStartupScript($jsUrl.'core/shopmodx.js');
+        return true;
+    }
+    
 }
+
+class ShopxResourceProductModelCreateManagerController  extends ShopxResourceCreateManagerController{}
+class ShopxResourceWarehouseCreateManagerController  extends ShopxResourceCreateManagerController{}
+class ShopxResourceLegalFormCreateManagerController  extends ShopxResourceCreateManagerController{}
+class ShopxResourceCurrencyCreateManagerController  extends ShopxResourceCreateManagerController{}
 
 return 'ShopxResourceCreateManagerController';

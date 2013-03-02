@@ -6,6 +6,7 @@ require_once MODX_CORE_PATH.'model/modx/processors/resource/update.class.php';
 class ShopmodxResourceUpdateProcessor extends modResourceUpdateProcessor{
     public $classKey = 'ShopmodxResource';
     public $objectType = 'shopmodxresource';
+    public $relatedObjectRequired = false;
 
     
     public function beforeSet() {
@@ -22,11 +23,13 @@ class ShopmodxResourceUpdateProcessor extends modResourceUpdateProcessor{
         if($cansave != true){
             return $cansave;
         }
-        
         return parent::beforeSave();
     }
     
     public function getRelatedObject(){
+        if(!$this->relatedObjectRequired){
+            return true;
+        }
         if(!$fObject = $this->object->getObject()){
             return "Can not get related object";
         }
