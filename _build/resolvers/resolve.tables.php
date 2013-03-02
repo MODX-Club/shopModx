@@ -12,6 +12,7 @@ if ($object->xpdo) {
             $modx->setLogLevel(modX::LOG_LEVEL_ERROR);
             $manager->createObjectContainer('ShopmodxSimpleObject');
             $manager->createObjectContainer('ShopmodxClient');
+            $manager->createObjectContainer('ShopmodxProduct');
             $modx->setLogLevel(modX::LOG_LEVEL_INFO);
             break;
     }

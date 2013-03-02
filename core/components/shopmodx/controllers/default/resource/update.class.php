@@ -1,5 +1,11 @@
 <?php
-
+/*
+ * ShopxResourceUpdateManagerController
+ * ShopxResourceProductModelUpdateManagerController
+ * ShopxResourceWarehouseUpdateManagerController
+ * ShopxResourceLegalFormUpdateManagerController
+ * ShopxResourceCurrencyUpdateManagerController
+ */
 require_once MODX_MANAGER_PATH. "controllers/default/resource/update.class.php";
 
 class ShopxResourceUpdateManagerController extends ResourceUpdateManagerController{
@@ -9,6 +15,8 @@ class ShopxResourceUpdateManagerController extends ResourceUpdateManagerControll
     }    
     
     public function _loadCustomCssJs(){
+        return true;
+        
                 $JS = <<<JS
         <script type="text/javascript">   
             Ext.onReady(function(){
@@ -29,6 +37,18 @@ JS;
         }
         return $url;
     }
+    
+    public function loadCoreJS(){
+        $assetsUrl = $this->getAssetsUrl();
+        $jsUrl = $assetsUrl.'js/';
+        $this->modx->regClientStartupScript($jsUrl.'core/shopmodx.js');
+        return true;
+    }
 }
+
+class ShopxResourceProductModelUpdateManagerController extends ShopxResourceUpdateManagerController{}
+class ShopxResourceWarehouseUpdateManagerController extends ShopxResourceUpdateManagerController{}
+class ShopxResourceLegalFormUpdateManagerController extends ShopxResourceUpdateManagerController{}
+class ShopxResourceCurrencyUpdateManagerController extends ShopxResourceUpdateManagerController{}
 
 return 'ShopxResourceUpdateManagerController';

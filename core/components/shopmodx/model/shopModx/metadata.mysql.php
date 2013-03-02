@@ -3,7 +3,11 @@
 $xpdo_meta_map = array (
   'modResource' => 
   array (
+    'ShopmodxResourceProductModel',
     'ShopmodxResourceProduct',
-    'ShopmodxResourceWarehouse',
+    //  'ShopmodxResourceWarehouse',
+    'ShopmodxResourceCurrency',
+    //'ShopmodxResourceLegalForm',
+    //'ShopmodxResourceClient',
   ),
 );

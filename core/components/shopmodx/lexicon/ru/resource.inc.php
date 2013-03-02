@@ -16,9 +16,9 @@ $_lang['shopmodx.resource_producer_create'] = "Производителя";
 $_lang['shopmodx.resource_producer_create_here'] = "Дочернего производителя";
 
 // Warehouse
-$_lang['shopmodx.resource_warehouse'] = "Склад";
-$_lang['shopmodx.resource_warehouse_create'] = "Склад";
-$_lang['shopmodx.resource_warehouse_create_here'] = "Дочерний склад";
+$_lang['shopmodx.resource_productmodel'] = "Склад";
+$_lang['shopmodx.resource_productmodel_create'] = "Склад";
+$_lang['shopmodx.resource_productmodel_create_here'] = "Дочерний склад";
 
 // Vendor
 $_lang['shopmodx.resource_vendor'] = "Поставщик";
@@ -34,3 +34,13 @@ $_lang['shopmodx.resource_legalform_create_here'] = "Правовую форму
 $_lang['shopmodx.resource_client'] = "Клиент";
 $_lang['shopmodx.resource_client_create'] = "Клиента";
 $_lang['shopmodx.resource_client_create_here'] = "Клиента";
+
+// Currency
+$_lang['shopmodx.resource_currency'] = "Валюта";
+$_lang['shopmodx.resource_currency_create'] = "Валюту";
+$_lang['shopmodx.resource_currency_create_here'] = "Валюту";
+
+// ProductModel
+$_lang['shopmodx.resource_productmodel'] = "Модель товара";
+$_lang['shopmodx.resource_productmodel_create'] = "Модель товара";
+$_lang['shopmodx.resource_productmodel_create_here'] = "Модель товара";

@@ -29,4 +29,18 @@ class ShopmodxResourceProduct extends ShopmodxResource{
     public static function getControllerPath(xPDO &$modx) {
         return self::_getControllerPath($modx, 'resourceproduct');
     }
+    
+    /*public  function getMany($alias, $criteria = null, $cacheFlag = false) {
+        // Desable get all Templates
+        if($alias == 'TemplateVars' && $criteria == 'all'){
+            return array();
+        }
+        return parent::getMany($alias, $criteria, $cacheFlag);
+    }
+    
+    public function process() {
+        $this->_content= $this->getContent();
+        $this->setProcessed(true);
+        return '[^p^]';
+    }*/
 }

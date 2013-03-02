@@ -5,6 +5,7 @@ require_once dirname(dirname(__FILE__)).'/resource/create.class.php';
 class ShopmodxResourceClientCreateProcessor extends ShopmodxResourceCreateProcessor{
     public $classKey = 'ShopmodxResourceClient';
     public $objectType = 'shopmodxresourceclient';
+    public $relatedObjectRequired = true;
     
     public function beforeSet() {
         if(!$this->getProperty('sm_legal_form')){
@@ -32,14 +33,5 @@ class ShopmodxResourceClientCreateProcessor extends ShopmodxResourceCreateProces
         $this->setProperties($ro_data);
         return parent::beforeSet();
     } 
-    
-    public function beforeSave() {
-        $cansave = $this->getRelatedObject();
-        if($cansave != true){
-            return $cansave;
-        }
-        
-        return parent::beforeSave();
-    }
 }
 return 'ShopmodxResourceClientCreateProcessor';

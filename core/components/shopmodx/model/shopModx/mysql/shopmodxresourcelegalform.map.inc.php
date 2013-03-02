@@ -9,14 +9,4 @@ $xpdo_meta_map['ShopmodxResourceLegalForm']= array (
   ),
   'fieldMeta' => 
   array (),
-  'composites' => array(
-    'LegalForm' => 
-        array (
-            'class' => 'ShopmodxLegalForm',
-            'local' => 'id',
-            'foreign' => 'resource_id',
-            'cardinality' => 'one',
-            'owner' => 'local',
-        ),
-  ),
 );

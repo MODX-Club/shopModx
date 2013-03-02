@@ -5,6 +5,7 @@ require_once dirname(dirname(__FILE__)).'/resource/update.class.php';
 class ShopmodxResourceClientUpdateProcessor extends ShopmodxResourceUpdateProcessor{
     public $classKey = 'ShopmodxResourceClient';
     public $objectType = 'shopmodxresourceclient';
+    public $relatedObjectRequired = true;
     
     public function beforeSet(){
         if(!$this->getProperty('longtitle')){
@@ -23,15 +24,6 @@ class ShopmodxResourceClientUpdateProcessor extends ShopmodxResourceUpdateProces
         
         $this->setProperties($ro_data);
         return parent::beforeSet();
-    }
-    
-    public function beforeSave() {
-        $cansave = $this->getRelatedObject();
-        if($cansave != true){
-            return $cansave;
-        }
-        
-        return parent::beforeSave();
     }
 }
 return 'ShopmodxResourceClientUpdateProcessor';

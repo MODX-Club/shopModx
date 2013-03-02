@@ -5,10 +5,6 @@
  */
 
 $this->loadClass('ShopmodxResource');
-if($this->context->key == 'mgr'){
-    require_once dirname(dirname(dirname(__FILE__))).'/processors/mgr/resourcelegalform/create.class.php';
-    require_once dirname(dirname(dirname(__FILE__))).'/processors/mgr/resourcelegalform/update.class.php';
-}
 
 
 class ShopmodxResourceLegalForm extends ShopmodxResource{
@@ -27,8 +23,4 @@ class ShopmodxResourceLegalForm extends ShopmodxResource{
     public function getResourceTypeName() {
         return $this->xpdo->lexicon('shopmodx.resource_legalform');
     }   
-    
-    public static function getControllerPath(xPDO &$modx) {
-        return self::_getControllerPath($modx, 'resourcelegalform');
-    }
 }

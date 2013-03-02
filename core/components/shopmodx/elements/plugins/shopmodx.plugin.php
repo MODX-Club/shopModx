@@ -1,20 +1,14 @@
 <?php
-
 switch($modx->event->name){
     case 'OnManagerPageInit':
-        $assetsUrl = $modx->getOption('shopmodx.manager_url',null,$modx->getOption('manager_url').'components/shopmodx/') ;
+        if(!$assetsUrl = $modx->getOption('shopmodx.manager_url',null)){
+            $assetsUrl = $modx->getOption('manager_url').'components/shopmodx/';
+        }
         $cssFile = $assetsUrl.'css/style.css';
-        //$jsFile  = $assetsUrl.'js/shopmodx.js';
+        
         $modx->regClientCSS($cssFile);
-        /*$modx->regClientStartupScript($jsFile);
-        $modx->regClientStartupScript(
-                "<script type=\"text/javascript\">
-                    Ext.onReady(function(){
-                        var shopModx  = new MODx.ux.shopModx({});
-                    });
-                 </script>
-                "
-        , true);*/
+        $modx->regClientStartupScript($assetsUrl.'js/core/shopmodx.js');
+        $modx->regClientStartupScript($assetsUrl.'js/widgets/combo/currencies.combo.js');
         
         $resourcesRules = array();
         
@@ -79,5 +73,3 @@ JS;
         $modx->regClientStartupScript($JS, true);
         break;
 }
-
-?>

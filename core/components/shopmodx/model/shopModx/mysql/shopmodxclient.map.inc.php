@@ -93,7 +93,7 @@ $xpdo_meta_map['ShopmodxClient']= array (
   'aggregates' => array(
     'LegalForm' => 
         array (
-            'class' => 'ShopmodxLegalForm',
+            'class' => 'ShopmodxResourceLegalForm',
             'local' => 'sm_legal_form',
             'foreign' => 'id',
             'cardinality' => 'one',
