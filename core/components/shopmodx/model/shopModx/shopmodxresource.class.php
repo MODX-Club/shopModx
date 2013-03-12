@@ -6,6 +6,8 @@ if($this->context->key == 'mgr'){
 }
 
 class ShopmodxResource extends modResource{
+    public $showInContextMenu = true;
+    public $allowChildrenResources = true;
     public $relatedObjectClass = null;               
     
     function __construct(xPDO &$xpdo) {
@@ -28,6 +30,18 @@ class ShopmodxResource extends modResource{
         $xpdo->addDerivativeCriteria($className, $criteria);
         return parent::loadCollection($xpdo, $className, $criteria, $cacheFlag);
     }
+    
+    public function getContextMenuText() {
+        return array(
+            'text_create' => $this->xpdo->lexicon('shopmodx.resource_create'),
+            'text_create_here' => $this->xpdo->lexicon('shopmodx.resource_create_here'),
+        ); 
+    }
+
+    public function getResourceTypeName() {
+        return $this->xpdo->lexicon('shopmodx.resource');
+    }     
+    
     
     /*
      * Add reference object
@@ -59,10 +73,20 @@ class ShopmodxResource extends modResource{
     }
     
     public static function _getControllerPath(xPDO &$modx, $path){
+        
         if(!$_path = $modx->getOption('shopmodx.core_path',null)){
             $_path = $modx->getOption('core_path').'components/shopmodx/';
         }
         $_path .= "controllers/default/{$path}/";
         return $_path;
     }
+    
+    public function process(){
+        if($this->_process() !== true){
+            return parent::process();
+        }
+        return $this->_content;
+    }
+    
+    protected function _process(){return ;}
 }

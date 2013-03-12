@@ -3,7 +3,6 @@
 require_once dirname(dirname(__FILE__)).'/resource/create.class.php';
 
 class ShopmodxResourceClientCreateProcessor extends ShopmodxResourceCreateProcessor{
-    public $classKey = 'ShopmodxResourceClient';
     public $objectType = 'shopmodxresourceclient';
     public $relatedObjectRequired = true;
     

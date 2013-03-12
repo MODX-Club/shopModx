@@ -4,7 +4,7 @@
  */
 
 
-class shopmodxRequest extends modRequest{
+class ShopmodxRequest extends modRequest{
     public function handleRequest() {
         $this->loadErrorHandler();
 
@@ -25,7 +25,7 @@ class shopmodxRequest extends modRequest{
             $this->modx->resourceMethod = $this->getResourceMethod();
             $this->modx->resourceIdentifier = $this->getResourceIdentifier($this->modx->resourceMethod);
             if ($this->modx->resourceMethod == 'id' && $this->modx->getOption('friendly_urls', null, false) && !$this->modx->getOption('request_method_strict', null, false)) {
-                $uri = array_search($this->modx->resourceIdentifier, $this->modx->aliasMap);
+                $uri = $this->modx->shopModx->makeUrl($this->modx->resourceIdentifier);
                 if (!empty($uri)) {
                     if ($this->modx->resourceIdentifier == $this->modx->getOption('site_start', null, 1)) {
                         $url = $this->modx->getOption('site_url', null, MODX_SITE_URL);
@@ -81,7 +81,7 @@ class shopmodxRequest extends modRequest{
                 if ($fullId !== $requestUri && strpos($requestUri, $fullId) !== 0) {
                     $parameters = $this->getParameters();
                     unset($parameters[$this->modx->getOption('request_param_alias')]);
-                    $url = $this->modx->makeUrl($this->modx->aliasMap[$identifier], '', $parameters, 'full');
+                    $url = $this->modx->shopModx->makeUrl($this->modx->aliasMap[$identifier], '', $parameters, 'full');
                     $this->modx->sendRedirect($url, array('responseCode' => 'HTTP/1.1 301 Moved Permanently'));
                 }
             }
@@ -107,6 +107,16 @@ class shopmodxRequest extends modRequest{
             }
         }
         if($id){
+            // Check for base_url
+            $site_start = $this->modx->getOption('site_start', null, 1);
+            if($id == $site_start){
+                $base_url = $this->modx->getOption('base_url', null, '/');
+                if($this->modx->resourceIdentifier != $base_url){
+                    $this->modx->sendRedirect($base_url, array('responseCode' => 'HTTP/1.1 301 Moved Permanently'));
+                    return;
+                }
+            }
+            
             $this->modx->resourceIdentifier = $id;
             return true;
         }

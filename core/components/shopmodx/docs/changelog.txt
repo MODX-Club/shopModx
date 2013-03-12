@@ -1,3 +1,16 @@
+shopModx-0.0.4-beta
+========================================
+- Added method shopModx::makeUrl(). Return url if aliasMap disabled
+- Added method ShopmodxResource::_process();
+- Added ShopmodxTemplate extends modTemplate with supporting third-party templates system.
+  modxSmarty using recomended http://modx.com/extras/package/modxsmarty
+- Updated class ShopmodxRequest
+- Added ShopmodxResource in create context menu
+- Changed ShopmodxResource related object modTemplate on ShopmodxTemplate
+- Added parser-class ShopmodxParser extends modParser for correct processing link-tags
+  [[~id]] when aliasMap disabled via cacheOptimizer.
+  To anable this class create system setting parser_class=classes.ShopmodxParser
+
 shopModx-0.0.3-beta
 ========================================
 - Added abstract class ShopmodxObjectGetListProcessor to fix getCount() bug.
@@ -6,6 +19,7 @@ shopModx-0.0.3-beta
   Use optionaly only with fast memory cache-providers like Memcached and disabled
   context aliasMap-cache via cacheOptimizer. http://modx.com/extras/package/cacheoptimizer
   Requires only on large shops (10000+ documents).
+  To anable this class create system setting modRequest.class=classes.ShopmodxRequest
   Details: http://community.modx-cms.ru/blog/research/9927.html
 - Remove controllers and processors file for some CRC:
     ShopmodxResourceWarehouse,

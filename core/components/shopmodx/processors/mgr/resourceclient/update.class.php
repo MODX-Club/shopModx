@@ -3,7 +3,6 @@
 require_once dirname(dirname(__FILE__)).'/resource/update.class.php';
 
 class ShopmodxResourceClientUpdateProcessor extends ShopmodxResourceUpdateProcessor{
-    public $classKey = 'ShopmodxResourceClient';
     public $objectType = 'shopmodxresourceclient';
     public $relatedObjectRequired = true;
     
