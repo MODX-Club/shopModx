@@ -1,5 +1,10 @@
 <?php
 
+// Resource
+$_lang['shopmodx.resource'] = "shopModx Document";
+$_lang['shopmodx.resource_create'] = "shopModx Document";
+$_lang['shopmodx.resource_create_here'] = "shopModx Document";
+
 // Category
 $_lang['shopmodx.resource_category'] = "Category";
 $_lang['shopmodx.resource_category_create'] = "Category";
