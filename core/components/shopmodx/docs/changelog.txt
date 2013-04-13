@@ -1,3 +1,7 @@
+shopModx-0.0.5-beta
+========================================
+- ShopmodxTemplate code refactored
+
 shopModx-0.0.4-beta
 ========================================
 - Added method shopModx::makeUrl(). Return url if aliasMap disabled

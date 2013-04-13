@@ -4,8 +4,7 @@
  */
 
 $this->loadClass('modTemplate');
-class ShopmodxTemplate extends modTemplate{
-    protected $templater = null;
+class ShopmodxTemplate extends modTemplate{ 
 
     public function process($properties = null, $content = null) {
         $this->_process($properties, $content);
@@ -16,20 +15,9 @@ class ShopmodxTemplate extends modTemplate{
     }
      
     protected function _process($properties = null, $content = null) {
-        if(!$this->isStatic() || !$this->getTemplater()){return;}
-        $this->parseTemplate();
-        return ;
-    }
-     
-    protected function & getTemplater(){
-        $this->templater = & $this->xpdo->smarty;
-        return $this->templater;
-    }
-     
-    protected function parseTemplate(){
+        if(!$this->isStatic()){return;}
         if(!$controller = $this->getSourceFile()){return ;}
         $modx = & $this->xpdo;
-        $templater = & $this->getTemplater();
         $resource = & $this->xpdo->resource;
         $this->_output = require_once $controller;
         $this->_processed = true;

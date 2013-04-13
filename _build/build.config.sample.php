@@ -27,6 +27,7 @@ $sources = array(
     'pages' => $root.'core/components/'.PKG_PATH.'/elements/pages/',
     'source_assets' => $root.'assets/components/'.PKG_PATH,
     'source_core' => $root.'core/components/'.PKG_PATH,
+    'source_manager' => $root.'manager/components/'.PKG_PATH,
     'templates' => $root.'core/components/'.PKG_PATH.'/elements/templates/',
     'model' => $root.'core/components/'.PKG_PATH.'/model/',
 );
