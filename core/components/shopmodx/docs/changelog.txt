@@ -1,3 +1,15 @@
+shopModx-0.0.6-beta-dev
+========================================
+- [#2] Exclude unpublished currencies
+- Added shopResource data controllers
+- Added ShopmodxWebGetlistProcessor
+- Added ShopmodxWebGetDataProcessor
+- Added ShopmodxWebGetCollectionProcessor
+- Added modWebResourceproductGetlistProcessor
+- Added modWebResourceproductGetDataProcessor
+- Added modWebResourceproductGetcollectionProcessor
+
+
 shopModx-0.0.5-beta
 ========================================
 - ShopmodxTemplate code refactored

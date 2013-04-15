@@ -29,11 +29,17 @@ class ShopmodxResourceUpdateProcessor extends modResourceUpdateProcessor{
         if(!$this->relatedObjectRequired){
             return true;
         }
-        if(!$fObject = $this->object->getObject()){
-            return "Can not get related object";
+        if($this->object instanceof ShopmodxResource){
+            if(!$fObject = $this->object->getObject()){
+                if(!$this->object->addObject()){
+                    return "Can not get related object";
+                }
+                else{
+                    $fObject = $this->object->getObject();
+                }
+            }
+            $fObject->fromArray($this->getProperties());
         }
-        $fObject->fromArray($this->getProperties());
-        
         return true;
     }
     

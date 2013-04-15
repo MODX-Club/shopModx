@@ -1,7 +1,7 @@
 <?php
 require_once dirname(dirname(__FILE__)).'/resource/update.class.php';
 class ShopxResourceProductUpdateManagerController extends ShopxResourceUpdateManagerController{
-    public function _loadCustomCssJs() {
+    public function _loadCustomCssJs___() {
         $this->loadCoreJS();
         
         $assetsUrl = $this->getAssetsUrl();
@@ -17,7 +17,8 @@ class ShopxResourceProductUpdateManagerController extends ShopxResourceUpdateMan
             return $loaded;
         }
         if(!$this->resource->getObject()){
-            return 'Can not get related object';
+            // return 'Can not get related object';
+            $this->resource->addObject();
         }
         return true;
     }
