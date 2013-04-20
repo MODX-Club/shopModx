@@ -6,37 +6,12 @@
 require_once dirname(__FILE__).'/getlist.class.php';
 
 class ShopmodxWebGetDataProcessor extends ShopmodxWebGetlistProcessor{
-    
-    public function getData() {
-        $data = array(
-            'total' => 0,
-            'results' => array(),
-        );
+    public $flushWhere = true;   // Flush query condition and search only by objects IDs
 
-        $c = $this->modx->newQuery($this->classKey);
-        $c = $this->prepareQueryBeforeCount($c);
-        $data['total'] = $this->modx->getCount($this->classKey,$c);
-        
-        $sortClassKey = $this->getSortClassKey();
-        $sortKey = $this->modx->getSelectColumns($sortClassKey,$this->getProperty('sortAlias',$sortClassKey),'',array($this->getProperty('sort')));
-        if (empty($sortKey) && $sortKey = $this->getProperty('sort')){
-            $c->sortby($sortKey,$this->getProperty('dir'));
-        }
-        
-        // get resources IDs
-        $this->getResourcesIDs($c);
-        
-        $c = $this->prepareQueryAfterCount($c);
-
-        if($c->prepare() && $c->stmt->execute()){
-            $data['results'] = $c->stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-        return $data;
-    }    
-    
-    public function getResourcesIDs(xPDOQuery $c){
+    protected function PrepareUniqObjectsQuery(xPDOQuery & $c){
         $query = clone $c;
         if (isset($query->query['columns'])) $query->query['columns'] = array();
+        
         $query->select(array ("DISTINCT {$this->classKey}.id"));
         
         $limit = intval($this->getProperty('limit'));
@@ -46,23 +21,21 @@ class ShopmodxWebGetDataProcessor extends ShopmodxWebGetlistProcessor{
             $query->limit($limit,$start);
         }
         
-        $query = $this->prepareQueryBeforeGetResourcesIDs($query);
-        
         if($query->prepare() && $query->stmt->execute() && $rows = $row = $query->stmt->fetchAll(PDO::FETCH_ASSOC)){
             $IDs = array();
             foreach($rows as $row){
                 $IDs[] = $row['id'];
             }
+            if ($this->flushWhere && isset($c->query['where'])) $c->query['where'] = array();
             $c->where(array(
                 "{$this->classKey}.id:IN" => $IDs,
             ));
         }
+        else{
+            return false;
+        }
         return $c;
-    }
-    
-    public function prepareQueryBeforeGetResourcesIDs(xPDOQuery $query){
-        return $query;
-    }
+    }    
     
     public function iterate(array $data) {
         $list = array();
@@ -86,17 +59,29 @@ class ShopmodxWebGetDataProcessor extends ShopmodxWebGetlistProcessor{
         return $list;
     }    
     
-    public function prepareQueryAfterCount(xPDOQuery $c) {
+    protected function setSelection(xPDOQuery $c) {
+        $c = parent::setSelection($c);
+        
         $c->leftJoin('modTemplateVarResource', 'TemplateVarResources');
         $c->leftJoin('modTemplateVar', 'tv', "tv.id=TemplateVarResources.tmplvarid");
+        
         $c->select(array(
             "tv.id as tv_id",
             'tv.name as tv_name',
             "TemplateVarResources.id as tv_value_id",
             "TemplateVarResources.value as tv_value",
         ));
-        return parent::prepareQueryAfterCount($c);
+        
+        return $c;
     }
+
+    protected function getResults(xPDOQuery & $c){
+        $data = array();
+        if($c->prepare() && $c->stmt->execute()){
+            $data = $c->stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return $data;
+    }  
 }
 
 return 'ShopmodxWebGetDataProcessor';

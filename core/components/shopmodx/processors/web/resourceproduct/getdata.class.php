@@ -11,12 +11,13 @@ class modWebResourceproductGetDataProcessor extends ShopmodxWebGetDataProcessor{
         return parent::prepareQueryBeforeCount($c);
     }
     
-    public function getColumns(xPDOQuery $c) {
+    public function setSelection(xPDOQuery $c) {
+        $c = parent::setSelection($c);
         $c->select(array(
             "Product.*",
             "Product.id as `product_id`",
         ));
-        return parent::getColumns($c);
+        return $c;
     } 
 }
 

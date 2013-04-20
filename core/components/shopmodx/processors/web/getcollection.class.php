@@ -22,14 +22,6 @@ class ShopmodxWebGetCollectionProcessor extends ShopmodxWebGetlistProcessor{
     
     public function prepareRow(xPDOObject $object) {
         return $object;
-    }    
-    
-    public function outputArray(array $array, $count = false){
-        return array(
-            'success'   => true,
-            'message'   => (int)$count,
-            'object'    => $array,
-        );
     }
 }
 
