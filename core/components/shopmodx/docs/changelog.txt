@@ -1,7 +1,14 @@
+shopModx-0.0.8-beta
+========================================
+- ShopmodxWebGetListProcessor code refactoring
+- ShopmodxWebGetDataProcessor code refactoring
+
+
 shopModx-0.0.7-beta
 ========================================
 - ShopmodxWebGetListProcessor code refactoring
 - ShopmodxWebGetDataProcessor code refactoring
+
 
 shopModx-0.0.6-beta
 ========================================

@@ -3,7 +3,10 @@
 class ShopmodxWebGetlistProcessor extends modObjectGetListProcessor{
     public $classKey = 'modResource';
     public $defaultSortField = '';
-    
+    public $flushWhere = true;   // Flush query condition and search only by objects IDs
+    protected $total = 0;
+
+
     
     /**
      * Get the data of the query
@@ -17,55 +20,79 @@ class ShopmodxWebGetlistProcessor extends modObjectGetListProcessor{
 
         $c = $this->modx->newQuery($this->classKey);
         $c = $this->prepareQueryBeforeCount($c);
-        if(!$data['total'] = (int)$this->getCount($c)){
+        if(!$c = $this->getCount($c)){
             return $data;
         }
         $c = $this->prepareQueryAfterCount($c);
+
+        $this->setSelection($c);
         
+        $data['total']   = $this->total;
+        $data['results'] = $this->getResults($c);
+        return $data;
+    }
+    
+    protected function getCount(xPDOQuery & $c){
         if(!$sortKey = $this->getProperty('sort')){
             $sortClassKey = $this->getSortClassKey();
             $sortKey = $this->modx->getSelectColumns($sortClassKey,$this->getProperty('sortAlias',$sortClassKey),'',array($this->getProperty('sort')));
         }
+        
+        $query = clone $c;
+        $query = $this->prepareCountQuery($query);
+        if(!$this->total = $this->modx->getCount($this->classKey,$query)){
+            return false;
+        }
+        
         if($sortKey){
             $c->sortby($sortKey,$this->getProperty('dir'));
+            $query->sortby($sortKey,$this->getProperty('dir'));
         }
         
-        if(!$c = $this->PrepareUniqObjectsQuery($c)){
-            return $data;
-        }
-
-        $this->setSelection($c);
-        
-        $data['results'] = $this->getResults($c);
-        return $data;
-    }    
-    
-    public function prepareQueryBeforeCount(xPDOQuery & $c) {
-        $c = parent::prepareQueryBeforeCount($c);
-        if($where = (array)$this->getProperty('where')){
-            $c->where($where);
-        }
-        return $c;
-    }
-    
-    protected function getCount(xPDOQuery & $c){
-        return $this->modx->getCount($this->classKey,$c);
-    }
-
-    protected function PrepareUniqObjectsQuery(xPDOQuery & $c){
         $limit = intval($this->getProperty('limit'));
         $start = intval($this->getProperty('start'));
         
         if ($limit > 0) {
-            $c->limit($limit,$start);
+            $query->limit($limit,$start);
         }
+        
+        $query = $this->PrepareUniqObjectsQuery($query);
+        if($query->prepare() && $query->stmt->execute() && $rows = $row = $query->stmt->fetchAll(PDO::FETCH_ASSOC)){
+            $IDs = array();
+            foreach($rows as $row){
+                $IDs[] = $row['id'];
+            }
+            if ($this->flushWhere && isset($c->query['where'])) $c->query['where'] = array();
+            $c->where(array(
+                "{$this->classKey}.id:IN" => $IDs,
+            ));
+        }
+        else{
+            return false;
+        }     
+        
         return $c;
+    }
+
+    protected function prepareCountQuery(xPDOQuery & $query){
+        if($where = (array)$this->getProperty('where')){
+            $query->where($where);
+        }
+        return $query;
+    }
+
+
+    protected function PrepareUniqObjectsQuery(xPDOQuery & $query){
+        if (isset($query->query['columns'])) $query->query['columns'] = array();
+        $query->select(array ("DISTINCT {$this->classKey}.id"));
+        
+        return $query;
     } 
 
     protected function setSelection(xPDOQuery $c){
         $c->select(array(
             "{$this->classKey}.*",
-            "{$this->classKey}.id as `resource_id`",    // Make sure resource id will not overwrite
+            "{$this->classKey}.id as `object_id`",    // Make sure resource id will not overwrite
         ));
         return $c;
     }
