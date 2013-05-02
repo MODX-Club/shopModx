@@ -40,7 +40,7 @@ class ShopmodxWebGetlistProcessor extends modObjectGetListProcessor{
         
         $query = clone $c;
         $query = $this->prepareCountQuery($query);
-        if(!$this->total = $this->modx->getCount($this->classKey,$query)){
+        if(!$this->total = $this->countTotal($this->classKey,$query)){
             return false;
         }
         
@@ -62,6 +62,9 @@ class ShopmodxWebGetlistProcessor extends modObjectGetListProcessor{
             foreach($rows as $row){
                 $IDs[] = $row['id'];
             }
+            // print $query->toSQL();
+            // print_r($IDs);
+            // exit;
             if ($this->flushWhere && isset($c->query['where'])) $c->query['where'] = array();
             $c->where(array(
                 "{$this->classKey}.id:IN" => $IDs,
@@ -81,6 +84,13 @@ class ShopmodxWebGetlistProcessor extends modObjectGetListProcessor{
         return $query;
     }
 
+    
+    /*
+     * Count total results
+     */
+    protected function countTotal($className, xPDOQuery & $query){
+        return $this->modx->getCount($this->classKey,$query);
+    }
 
     protected function PrepareUniqObjectsQuery(xPDOQuery & $query){
         if (isset($query->query['columns'])) $query->query['columns'] = array();

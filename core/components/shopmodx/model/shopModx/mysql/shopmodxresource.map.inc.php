@@ -9,15 +9,4 @@ $xpdo_meta_map['ShopmodxResource']= array (
   ),
   'fieldMeta' => 
   array (),
-  'aggregates' => 
-  array (  
-    'Template' => 
-    array (
-      'class' => 'ShopmodxTemplate',
-      'local' => 'template',
-      'foreign' => 'id',
-      'cardinality' => 'one',
-      'owner' => 'foreign',
-    ), 
-  ),
 );

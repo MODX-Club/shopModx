@@ -1,3 +1,9 @@
+
+shopModx-0.0.9-beta
+========================================
+- Removed ShopmodxTemplate class
+- Added method ShopmodxWebGetlistProcessor::countTotal
+
 shopModx-0.0.8-beta
 ========================================
 - ShopmodxWebGetListProcessor code refactoring

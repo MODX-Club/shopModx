@@ -80,25 +80,4 @@ class ShopmodxResource extends modResource{
         $_path .= "controllers/default/{$path}/";
         return $_path;
     }
-    
-    public function process(){
-        $this->_process();
-        if(!$this->_processed){
-            return parent::process();
-        }
-        return $this->_content;
-    }
-    
-    protected function _process(){
-        $this->_content= '';
-        $this->_output= '';
-        $this->xpdo->getParser();
-        if ($baseElement= $this->getOne('Template') AND $baseElement->process()) {
-            $this->_content= $baseElement->_output;
-            $this->_processed= true;
-        } else {
-            return parent::process();
-        }
-        return $this->_content;
-    }
 }
