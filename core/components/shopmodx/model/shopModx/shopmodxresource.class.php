@@ -1,9 +1,9 @@
 <?php
 
-if($this->context->key == 'mgr'){
-    require_once dirname(dirname(dirname(__FILE__))).'/processors/mgr/resource/create.class.php';
-    require_once dirname(dirname(dirname(__FILE__))).'/processors/mgr/resource/update.class.php';
-}
+$this->loadClass('modResource');
+require_once dirname(dirname(dirname(__FILE__))).'/processors/mgr/resource/create.class.php';
+require_once dirname(dirname(dirname(__FILE__))).'/processors/mgr/resource/update.class.php';
+
 
 class ShopmodxResource extends modResource{
     public $showInContextMenu = true;

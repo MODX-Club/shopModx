@@ -5,10 +5,9 @@
  */
 
 $this->loadClass('ShopmodxResource');
-if($this->context->key == 'mgr'){
-    require_once dirname(dirname(dirname(__FILE__))).'/processors/mgr/resourceclient/create.class.php';
-    require_once dirname(dirname(dirname(__FILE__))).'/processors/mgr/resourceclient/update.class.php';
-}
+require_once dirname(dirname(dirname(__FILE__))).'/processors/mgr/resourceclient/create.class.php';
+require_once dirname(dirname(dirname(__FILE__))).'/processors/mgr/resourceclient/update.class.php';
+
 
 class ShopmodxResourceClient extends ShopmodxResource{
     public $showInContextMenu = true;

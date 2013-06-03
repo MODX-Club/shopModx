@@ -4,10 +4,8 @@
  * class Category
  */
 $this->loadClass('ShopmodxResource');
-if($this->context->key == 'mgr'){
-    require_once dirname(dirname(dirname(__FILE__))).'/processors/mgr/resourceproduct/create.class.php';
-    require_once dirname(dirname(dirname(__FILE__))).'/processors/mgr/resourceproduct/update.class.php';
-}
+require_once dirname(dirname(dirname(__FILE__))).'/processors/mgr/resourceproduct/create.class.php';
+require_once dirname(dirname(dirname(__FILE__))).'/processors/mgr/resourceproduct/update.class.php';
 
 class ShopmodxResourceProduct extends ShopmodxResource{
     public $showInContextMenu = true;
@@ -30,17 +28,20 @@ class ShopmodxResourceProduct extends ShopmodxResource{
         return self::_getControllerPath($modx, 'resourceproduct');
     }
     
-    /*public  function getMany($alias, $criteria = null, $cacheFlag = false) {
-        // Desable get all Templates
-        if($alias == 'TemplateVars' && $criteria == 'all'){
-            return array();
+    public function duplicate(array $options = array()) {
+        $newResource = parent::duplicate($options);
+        
+        if (!($newResource instanceof modResource)) {
+            return $newResource;
         }
-        return parent::getMany($alias, $criteria, $cacheFlag);
+        
+        // Create Product duplicate
+        if($product = $this->getOne('Product')){
+            $newProduct = $this->xpdo->newObject('ShopmodxProduct', $product->toArray());
+            $newResource->addOne($newProduct);
+            $newResource->save();
+        }
+        
+        return $newResource;
     }
-    
-    public function process() {
-        $this->_content= $this->getContent();
-        $this->setProcessed(true);
-        return '[^p^]';
-    }*/
 }
