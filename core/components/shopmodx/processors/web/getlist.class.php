@@ -56,7 +56,7 @@ class ShopmodxWebGetlistProcessor extends modObjectGetListProcessor{
             $query->limit($limit,$start);
         }
         
-        $query = $this->PrepareUniqObjectsQuery($query);
+        $query = $this->prepareUniqObjectsQuery($query);
         if($query->prepare() && $query->stmt->execute() && $rows = $row = $query->stmt->fetchAll(PDO::FETCH_ASSOC)){
             $IDs = array();
             foreach($rows as $row){
@@ -92,7 +92,7 @@ class ShopmodxWebGetlistProcessor extends modObjectGetListProcessor{
         return $this->modx->getCount($this->classKey,$query);
     }
 
-    protected function PrepareUniqObjectsQuery(xPDOQuery & $query){
+    protected function prepareUniqObjectsQuery(xPDOQuery & $query){
         if (isset($query->query['columns'])) $query->query['columns'] = array();
         $query->select(array ("DISTINCT {$this->classKey}.id"));
         

@@ -1,3 +1,8 @@
+shopModx-0.1.1-beta
+========================================
+- [#8] Set modWebResourceproductGetlistProcessor::setSelection() to protected
+- [#6] Renamed PrepareUniqObjectsQuery to prepareUniqObjectsQuery
+- Minor bugfix
 
 shopModx-0.1.0-beta
 ========================================

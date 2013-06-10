@@ -7,7 +7,7 @@ class modWebResourceproductGetcollectionProcessor extends ShopmodxWebGetCollecti
         return parent::prepareQueryBeforeCount($c);
     }
     
-    public function setSelection(xPDOQuery $c) {
+    protected function setSelection(xPDOQuery $c) {
         $c = parent::setSelection($c);
         $c->select(array(
             "Product.*",

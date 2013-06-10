@@ -37,8 +37,7 @@ class ShopmodxResourceProduct extends ShopmodxResource{
         
         // Create Product duplicate
         if($product = $this->getOne('Product')){
-            $newProduct = $this->xpdo->newObject('ShopmodxProduct', $product->toArray());
-            $newResource->addOne($newProduct);
+            $newResource->addObject($product->toArray());
             $newResource->save();
         }
         
