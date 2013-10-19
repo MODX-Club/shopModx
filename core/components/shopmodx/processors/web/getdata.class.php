@@ -7,51 +7,63 @@ require_once dirname(__FILE__).'/getlist.class.php';
 
 class ShopmodxWebGetDataProcessor extends ShopmodxWebGetlistProcessor{
     
-    public function iterate(array $data) {
-        $list = array();
-        $list = $this->beforeIteration($list);
-        $this->currentIndex = 0;
-        foreach ($data['results'] as $row) {
-            $object_id = $row['object_id'];
-            if(empty($list[$object_id])){
-                $list[$object_id] = $row;
-                $list[$object_id]['tvs'] = array();
-            }
-            if(!empty($row['tv_name'])){
-                $list[$object_id]['tvs'][$row['tv_name']] = array(
-                    'tv_id'    => $row['tv_id'],
-                    'value_id'    => $row['tv_value_id'],
-                    'value'    => $row['tv_value'],
-                );
-            }
+    public function initialize(){
+        
+        $this->setDefaultProperties(array(
+            'includeTVs'  => true,  
+        ));
+        
+        return parent::initialize();
+    }
+    
+    protected function setSelection(xPDOQuery $c) {
+        $c = parent::setSelection($c);
+    
+        if($this->getProperty('includeTVs')){
+            $c->leftJoin('modTemplateVarResource', 'TemplateVarResources');
+            $c->leftJoin('modTemplateVar', 'tv', "tv.id=TemplateVarResources.tmplvarid");
+    
+            $c->select(array(
+                "tv.id as tv_id",
+                'tv.name as tv_name',
+                "TemplateVarResources.id as tv_value_id",
+                "TemplateVarResources.value as tv_value",
+            ));
         }
+    
+        return $c;
+    }
+    
+    
+    public function iterate(array $data) {
+        $list = $this->beforeIteration($data['results']);
         $list = $this->afterIteration($list);
         return $list;
     }    
     
-    protected function setSelection(xPDOQuery $c) {
-        $c = parent::setSelection($c);
-        
-        $c->leftJoin('modTemplateVarResource', 'TemplateVarResources');
-        $c->leftJoin('modTemplateVar', 'tv', "tv.id=TemplateVarResources.tmplvarid");
-        
-        $c->select(array(
-            "tv.id as tv_id",
-            'tv.name as tv_name',
-            "TemplateVarResources.id as tv_value_id",
-            "TemplateVarResources.value as tv_value",
-        ));
-        
-        return $c;
-    }
-
+    
     protected function getResults(xPDOQuery & $c){
-        $data = array();
+        $list = array();
+        $this->currentIndex = 0;
         if($c->prepare() && $c->stmt->execute()){
-            $data = $c->stmt->fetchAll(PDO::FETCH_ASSOC);
+            while($row = $c->stmt->fetch(PDO::FETCH_ASSOC)){
+                $object_id = $row['object_id'];
+                if(empty($list[$object_id])){
+                    $list[$object_id] = $row;
+                    $list[$object_id]['tvs'] = array();
+                    $this->currentIndex++;
+                }
+                if(!empty($row['tv_name'])){
+                    $list[$object_id]['tvs'][$row['tv_name']] = array(
+                        'tv_id'    => $row['tv_id'],
+                        'value_id'    => $row['tv_value_id'],
+                        'value'    => $row['tv_value'],
+                    );
+                }
+            }
         }
-        return $data;
-    }  
+        return $list;
+    }
 }
 
 return 'ShopmodxWebGetDataProcessor';

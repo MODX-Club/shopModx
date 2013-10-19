@@ -15,7 +15,7 @@ class ShopmodxResource extends modResource{
         return parent::__construct($xpdo);
     }
     
-    public static function load(xPDO & $xpdo, $className, $criteria= null, $cacheFlag= true){
+    public static function load(xPDO & $xpdo, $className, $criteria, $cacheFlag= true){
         if (!is_object($criteria)) {
             $criteria= $xpdo->getCriteria($className, $criteria, $cacheFlag);
         }

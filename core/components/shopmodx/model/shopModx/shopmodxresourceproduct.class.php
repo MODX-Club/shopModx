@@ -9,7 +9,7 @@ require_once dirname(dirname(dirname(__FILE__))).'/processors/mgr/resourceproduc
 
 class ShopmodxResourceProduct extends ShopmodxResource{
     public $showInContextMenu = true;
-    public $allowChildrenResources = true;
+    public $allowChildrenResources = false;
     
     public $relatedObjectClass = 'ShopmodxProduct';
     

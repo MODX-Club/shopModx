@@ -7,6 +7,39 @@ class ShopmodxWebGetlistProcessor extends modObjectGetListProcessor{
     protected $total = 0;
 
 
+    public function initialize(){
+        
+        $this->setDefaultProperties(array(
+            'cache'             => false,           // Use cache
+            'cache_lifetime'    => 0,               // seconds
+            'cache_prefix'      => 'getdata/',      
+        ));
+        
+        return parent::initialize();
+    }
+
+
+    public function process(){
+        
+        // Use or not caching
+        $cacheable = $this->getProperty('cache');
+        
+        if($cacheable){
+            $key = $this->getProperty('cache_prefix') . md5( __CLASS__ . json_encode($this->getProperties()));
+            if($cache = $this->modx->cacheManager->get($key)){
+                return $this->prepareResponse($cache);
+            }
+        }
+        
+        $result = parent::process();
+        
+        if($cacheable){
+            $this->modx->cacheManager->set($key, $result, $this->getProperty('cache_lifetime', 0));
+        }
+        
+        return $result;
+    }  
+
     
     /**
      * Get the data of the query
@@ -112,6 +145,25 @@ class ShopmodxWebGetlistProcessor extends modObjectGetListProcessor{
     }
     
     protected function getMessage(){return '';}
+
+    public function afterIteration(array $list) {
+        $_list = parent::afterIteration($list);
+        $list = array();
+        
+        foreach($_list as & $l){
+            $l['id'] = $l['object_id'];
+            $list[$l['id']] = $l;
+        }
+        
+        return $list;
+    }
+
+    /*
+        Here you may add callback when caching anabled
+    */
+    protected function prepareResponse($response){
+        return $response;
+    }
 
     public function outputArray(array $array, $count = false){
         return array(
