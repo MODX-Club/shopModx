@@ -55,13 +55,8 @@ class ShopxResourceProductUpdateManagerController extends ShopxResourceUpdateMan
             },{
                 xtype: 'shopmodx-combo-currencies'
                 ,value: '{$currency}'
-            },{
-                xtype: 'textfield'
-                ,fieldLabel: "Артикул"
-                ,name: 'sm_article'
-                ,value: '{$sm_article}'
             }]
-        });
+        })
     });
 </script>
 JS;
