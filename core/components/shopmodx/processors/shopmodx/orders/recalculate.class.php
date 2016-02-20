@@ -56,10 +56,13 @@ class modShopmodxOrdersRecalculateProcessor extends modShopmodxOrdersObjectProce
         $OrderProducts = $this->object->OrderProducts;
         
         foreach($OrderProducts as & $OrderProduct){
-            print_r($OrderProduct->toArray());
+            $OrderProduct->quantity = isset($quantity[$OrderProduct->id]) ? $quantity[$OrderProduct->id] : 0;
+            # print_r($OrderProduct->toArray());
         }
         
-        print count($OrderProducts);
+        unset($OrderProduct);
+        
+        # print count($OrderProducts);
         
         return parent::beforeSave();
     }

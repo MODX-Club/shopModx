@@ -32,19 +32,10 @@ class modShopmodxOrdersGetdataProcessor extends modShopmodxGetdataProcessor{
         
         # $order_products_table = $this->modx->getTableName('ShopmodxOrderProduct');
         
-        $c->select(array(
-            "`{$this->classKey}`.id as order_id", 
-            "Status.status as status_str", 
-            # "(select sum(op.price * op.quantity) from {$order_products_table} op where op.order_id = {$this->classKey}.id) as sum",
-            "count(*) as positions",
-            "sum(OrderProducts.quantity) as total",
-            "sum(OrderProducts.price * OrderProducts.quantity) as sum",
-            "Payment.id as pay_id",
-            "Payment.paysys_invoice_id",
-            "Payment.date as pay_date",
-            "Payment.sum as pay_sum",
-            "Paysystem.name as paysystem_name",
-        )); 
+        
+        if($status = $this->getProperty('status')){
+            $where['status_id'] = $status;
+        }
         
         if(!$this->getProperty('include_canceled_products')){
             $where['OrderProducts.quantity:>'] = 0;
@@ -60,6 +51,29 @@ class modShopmodxOrdersGetdataProcessor extends modShopmodxGetdataProcessor{
         print $c->toSQL();
         exit;*/
          
+        return $c;
+    }
+    
+    protected function setSelection(xPDOQuery $c){
+        
+        $c = parent::setSelection($c);
+        
+        $alias = $c->getAlias();
+        
+        $c->select(array(
+            "`{$this->classKey}`.id as order_id", 
+            "Status.status as status_str", 
+            # "(select sum(op.price * op.quantity) from {$order_products_table} op where op.order_id = {$this->classKey}.id) as sum",
+            "count(*) as positions",
+            "sum(OrderProducts.quantity) as total",
+            "sum(OrderProducts.price * OrderProducts.quantity) as sum",
+            "Payment.id as pay_id",
+            "Payment.paysys_invoice_id",
+            "Payment.date as pay_date",
+            "Payment.sum as pay_sum",
+            "Paysystem.name as paysystem_name",
+        )); 
+        
         return $c;
     }
 }

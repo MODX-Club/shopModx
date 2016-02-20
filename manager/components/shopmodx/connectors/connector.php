@@ -9,7 +9,13 @@ if(!$path = $modx->getOption('shopmodx.core_path', null)){
     $path = $modx->getOption('core_path', null) .'components/shopmodx/';
 }
 
-$path .= 'processors/mgr/'; 
+$path .= 'processors/shopmodx/';
+
+if(!isset($location)){
+    $location = '';
+}
+
+# print $path . $location;
 
 $modx->request->handleRequest(array(
     'processors_path' => $path,

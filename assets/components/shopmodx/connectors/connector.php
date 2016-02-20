@@ -23,6 +23,6 @@ $path .= 'processors/shopmodx/';
 $modx->request->handleRequest(array(
     'processors_path' => $path,
     'location' => $location,
-    # 'action' => 'web/public/action',
+    'action' => 'public/action',
 ));
 
