@@ -10,15 +10,28 @@ class modShopmodxPublicActionProcessor extends modProcessor{
     
     public static function getInstance(modX &$modx,$className,$properties = array()) {
         
+        // Удаляем параметр корзины
+        unset($properties['order_id']);
+        
+        $action = !empty($properties['basket_action']) ? $properties['basket_action'] : (!empty($properties['pub_action']) ? $properties['pub_action'] : '');
+        
+        # print '<pre>';
+        # print_r($properties);
+        # 
+        # print $action;
+        # 
+        # exit;
+        
         // Здесь мы имеем возможность переопределить реальный класс процессора
-        if(!empty($properties['basket_action']) && !self::$actualClassName){
+        if($action AND !self::$actualClassName){
              
-            switch($properties['basket_action']){
+            switch($action){
                 
                 case 'products_add': 
                 case 'products/add': 
-                    require_once dirname(dirname(__FILE__)) . '/orders/products/add.class.php';                    
-                    self::$actualClassName =  'modBasketWebOrdersProductsAddProcessor';
+                case 'orders/add_product': 
+                    require_once dirname(dirname(__FILE__)) . '/orders/add_product.class.php';                    
+                    self::$actualClassName =  'modShopmodxOrdersAddproductProcessor';
                     break;
                 
                 case 'products_getdata':
@@ -28,14 +41,20 @@ class modShopmodxPublicActionProcessor extends modProcessor{
                 
                 // Это чисто для Ajax-а. Состояние корзины
                 case 'getdata':
-                    require_once dirname(dirname(__FILE__)) . '/ajax/orders/getdata.class.php';                    
-                    self::$actualClassName =  'modBasketWebAjaxOrdersGetdataProcessor';
+                case 'orders/getdata':
+                    require_once dirname(dirname(__FILE__)) . '/orders/object.class.php';                    
+                    self::$actualClassName =  'modShopmodxOrdersObjectProcessor';
                     break;
                 
                 case 'products_remove':
                 case 'products/remove':
                     require_once dirname(dirname(__FILE__)) . '/orders/products/remove.class.php';                    
-                    self::$actualClassName =  'modBasketWebOrdersProductsRemoveProcessor';
+                    self::$actualClassName =  'modShopmodxOrdersProductsRemoveProcessor';
+                    break;
+                    
+                case 'order/submit':
+                    require_once dirname(dirname(__FILE__)) . '/orders/submit.class.php';                    
+                    self::$actualClassName =  'modShopmodxOrdersSubmitProcessor';
                     break;
                     
                 case 'recalculate':
