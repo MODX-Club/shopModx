@@ -1,3 +1,12 @@
+shopModx-2.0.0-beta
+========================================
+- Code refactoring
+- Merge Billing Extra into shopModx
+- Merge Basket Extra into shopModx
+- Merge shopModxGroupEdit Extra into shopModx
+- Remove ShopmodxResourceProduct class and other CRC
+
+
 shopModx-0.2.0-beta
 ========================================
 - Added param includeTVs in ShopmodxWebGetDataProcessor. Default true.

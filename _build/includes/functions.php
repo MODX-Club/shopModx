@@ -31,10 +31,17 @@
  * @return mixed|string
  */
 function getSnippetContent($filename) {
-    // print "<br />Try to open file: {$filename}<br />\n";
-    $o = file_get_contents($filename);
-    $o = str_replace('<?php','',$o);
-    $o = str_replace('?>','',$o);
-    $o = trim($o);
-    return $o;
+  global $modx;
+  
+  // print "<br />Try to open file: {$filename}<br />\n";
+  if(!is_file($filename)){
+    $modx->log(modX::LOG_LEVEL_ERROR,"Element doesn't exist! ({$filename}).");
+    return '';
+  }
+  
+  $o = file_get_contents($filename);
+  $o = str_replace('<?php','',$o);
+  $o = str_replace('?>','',$o);
+  $o = trim($o);
+  return $o;
 }
