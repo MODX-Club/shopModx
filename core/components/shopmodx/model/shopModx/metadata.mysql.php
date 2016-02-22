@@ -23,6 +23,14 @@ $this->map['modResource']['aggregates']['ProductData'] = array(
     'owner' => 'local',
 );
 
+$this->map['modResource']['composites']['Product'] = array(
+    'class' => 'ShopmodxProduct',
+    'local' => 'id',
+    'foreign' => 'resource_id',
+    'cardinality' => 'one',
+    'owner' => 'local',
+);
+
 
 $this->map['modUser']['composites']['Orders'] = array(
     'class' => 'ShopmodxOrder',

@@ -9,14 +9,14 @@ $xpdo_meta_map['ShopmodxResourceProduct']= array (
   ),
   'fieldMeta' => 
   array (),
-  'composites' => array(
-    'Product' => 
-        array (
-            'class' => 'ShopmodxProduct',
-            'local' => 'id',
-            'foreign' => 'resource_id',
-            'cardinality' => 'one',
-            'owner' => 'local',
-        ),
-  ),
+  # 'composites' => array(
+  #   'Product' => 
+  #       array (
+  #           'class' => 'ShopmodxProduct',
+  #           'local' => 'id',
+  #           'foreign' => 'resource_id',
+  #           'cardinality' => 'one',
+  #           'owner' => 'local',
+  #       ),
+  # ),
 );
