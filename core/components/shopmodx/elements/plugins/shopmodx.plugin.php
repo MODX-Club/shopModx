@@ -9,67 +9,28 @@ switch($modx->event->name){
         $modx->regClientCSS($cssFile);
         $modx->regClientStartupScript($assetsUrl.'js/core/shopmodx.js');
         $modx->regClientStartupScript($assetsUrl.'js/widgets/combo/currencies.combo.js');
-        
-        $resourcesRules = array();
-        
-        $eventParams = array(
-            'params' => array(
-                'resourcesRules' => & $resourcesRules
-            ),
-        );
-        
-        $modx->invokeEvent('OnShopModxSetResourcesCreateRules', $eventParams);
-         
-        $resourcesRulesJSON = $modx->toJSON($resourcesRules);
-        
-$JS = <<<JS
-<script type="text/javascript">
-Ext.onReady(function(){
-    // Получаем дерево
-    var tree = Ext.getCmp('modx-resource-tree');
-    // Описываем правила разрешенных дочерних ресурсов
-    var resourcesRules = {$resourcesRulesJSON};
-    // Прописываем функцию копирования значений объекта,
-    // так как у нас проблемы на уровне ссылок на объекты,
-    // то есть изменяя одну переменную, изменяется и другая, если объект общий
-    var copyObject = function(from){
-        var to = {};
-        for(i in from){
-            to[i] = from[i];
-        }
-        return to;
-    }    
-    // Фиксируем изначальный набор классов
-    var classes = copyObject(MODx.config.resource_classes);
+        $modx->regClientStartupScript($assetsUrl.'js/widgets/orders/orderstatus.combo.js');
 
-    // Навешиваем функцию изменения набора классов
-    // при создании контекстного меню
-    tree.on('loadCreateMenus', function(types){
-        var node = this.getSelectionModel().getSelectedNode()
-            ,classKey;
-
-        if(resourcesRules && node && node.attributes 
-                && (classKey = node.attributes.classKey)
-                && resourcesRules[classKey]
-        ){
-            for(var i in types){
-                if(!resourcesRules[classKey].in_array(i)){
-                    delete  types[i];
+        $attrs = $modx->user->getAttributes(array(),'', true);
+        $policies = array();
+        if(!empty($attrs['modAccessContext']['mgr'])){
+            foreach($attrs['modAccessContext']['mgr'] as $attr){
+                foreach($attr['policy'] as $policy => $value){
+                    if(empty($policies[$policy])){
+                        $policies[$policy] = $value;
+                    }
                 }
             }
-        }    
-        return true;
-    }, tree);
-    
-    // Навешиваем функцию восстановления набора классов
-    // Эта функция выполнится после формирования меню, так как навешено позже
-    // базового метода дерева ресурсов
-    tree.on('contextmenu', function(){
-        MODx.config.resource_classes = copyObject(classes);
-    });
-}); 
-</script>
-JS;
-        $modx->regClientStartupScript($JS, true);
+        }
+        
+        $modx->regClientStartupScript('<script type="text/javascript">
+            Shopmodx.policies = '. $modx->toJSON($policies).';
+            Shopmodx.sudo = '. (int)$modx->user->sudo.';
+        </script>', true);
+        
+        $modx->regClientStartupScript($assetsUrl .'js/widgets/groupedit/shopmodxgroupedit.js'); 
+        
+        $modx->regClientStartupScript($assetsUrl.'js/widgets/groupedit/grid.js'); 
+                
         break;
 }

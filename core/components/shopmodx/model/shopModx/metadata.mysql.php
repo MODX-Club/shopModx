@@ -4,10 +4,10 @@
 $xpdo_meta_map = array (
   'modResource' => 
   array (
-    'ShopmodxResource',
-    'ShopmodxResourceProductModel',
-    'ShopmodxResourceProduct',
-    'ShopmodxResourceCurrency',
+    # 'ShopmodxResource',
+    # 'ShopmodxResourceProductModel',
+    # 'ShopmodxResourceProduct',
+    # 'ShopmodxResourceCurrency',
     //'ShopmodxResourceWarehouse',
     //'ShopmodxResourceLegalForm',
     //'ShopmodxResourceClient',
@@ -19,6 +19,14 @@ $this->map['modResource']['aggregates']['ProductData'] = array(
     'class' => 'ShopmodxProductData',
     'local' => 'id',
     'foreign' => 'id',
+    'cardinality' => 'one',
+    'owner' => 'local',
+);
+
+$this->map['modResource']['composites']['Product'] = array(
+    'class' => 'ShopmodxProduct',
+    'local' => 'id',
+    'foreign' => 'resource_id',
     'cardinality' => 'one',
     'owner' => 'local',
 );
@@ -35,6 +43,7 @@ $this->map['modUser']['composites']['Orders'] = array(
 
 $custom_fields = array(
     "modResource"   => array(
+        
         "fields"    => array(
             "price"  => array(
                 "defaultValue"  => 0,
@@ -42,20 +51,32 @@ $custom_fields = array(
                     'dbtype' => 'decimal',
                     'precision' => '10,2',
                     'attributes' => 'unsigned',
-                    'phptype' => 'integer',
+                    'phptype' => 'float',
                     'null' => false,
                     'index' => 'index',
                 ),
             ),
-            # "image"  => array(
-            #     "defaultValue"  => NULL,
-            #     "metaData"  => array (
-            #       'dbtype' => 'varchar',
-            #       'precision' => '512',
-            #       'phptype' => 'string',
-            #       'null' => false,
-            #     ),
-            # ),
+            "article"  => array(
+                "defaultValue"  => NULL,
+                "metaData"  => array (
+                    'dbtype' => 'varchar',
+                    'precision' => '36',
+                    'phptype' => 'string',
+                    'null' => true,
+                    'index' => 'article',
+                ),
+            ),
+            "currency"  => array(
+                "defaultValue"  => NULL,
+                "metaData"  => array (
+                    'dbtype' => 'int',
+                    'precision' => '10',
+                    'attributes' => 'unsigned',
+                    'phptype' => 'integer',
+                    'null' => true,
+                    'index' => 'currency',
+                ),
+            ),
         ),
         
         "indexes"   => array(
@@ -68,6 +89,38 @@ $custom_fields = array(
               'columns' => 
               array (
                 'price' => 
+                array (
+                  'length' => '',
+                  'collation' => 'A',
+                  'null' => false,
+                ),
+              ),
+            ),
+            'article' => 
+            array (
+              'alias' => 'article',
+              'primary' => false,
+              'unique' => false,
+              'type' => 'BTREE',
+              'columns' => 
+              array (
+                'article' => 
+                array (
+                  'length' => '',
+                  'collation' => 'A',
+                  'null' => false,
+                ),
+              ),
+            ),
+            'currency' => 
+            array (
+              'alias' => 'currency',
+              'primary' => false,
+              'unique' => false,
+              'type' => 'BTREE',
+              'columns' => 
+              array (
+                'currency' => 
                 array (
                   'length' => '',
                   'collation' => 'A',

@@ -2,26 +2,18 @@
 
 $settings = array();
 
+$setting_name = PKG_NAME_LOWER.'.setting';
 $setting = $modx->newObject('modSystemSetting');
 $setting->fromArray(array(
-    'key' => 'shopmodx.default_currency', 
-    'value' => '',
-    'xtype' => 'shopmodx-combo-currencies', 
-    'namespace' => NAMESPACE_NAME,
-    'area' => 'shop',
+ 'key' => $setting_name,
+ 'value' => '',
+ 'xtype' => 'textfield',
+ 'namespace' => NAMESPACE_NAME,
+ 'area' => 'default',
 ),'',true,true);
-$settings[] = $setting;
-unset($setting);
 
-$setting = $modx->newObject('modSystemSetting');
-$setting->fromArray(array(
-    'key' => 'shopmodx.product_default_template', 
-    'value' => '',
-    'xtype' => 'modx-combo-template', 
-    'namespace' => NAMESPACE_NAME,
-    'area' => 'shop',
-),'',true,true);
 $settings[] = $setting;
-unset($setting);
 
+
+unset($setting,$setting_name);
 return $settings;
