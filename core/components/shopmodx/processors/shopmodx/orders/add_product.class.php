@@ -128,6 +128,17 @@ class modShopmodxOrdersAddproductProcessor extends modShopmodxOrdersObjectProces
         return true;
     }
     
+    public function cleanup() {
+        
+        $result = parent::cleanup();
+        
+        if(is_array($result)){
+            $result['message'] = "Товар успешно добавлен в корзину";
+        }
+        
+        return $result;
+    }
+    
 #     public function beforeSave(){
 #         
 #         $orderproducts = array();
