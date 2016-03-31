@@ -1,3 +1,11 @@
+shopModx-2.1.0-beta
+========================================
+- Added payment processor
+- Added robokassa payment processor
+- Added OnShopModxOrderBeforeSave event
+- Added Console script
+
+
 shopModx-2.0.0-beta
 ========================================
 - Code refactoring

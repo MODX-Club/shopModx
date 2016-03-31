@@ -50,7 +50,8 @@ class modShopmodxOrdersProductsGetdataProcessor extends modShopmodxGetdataProces
             "Product.id as resource_id",  
             "{$alias}.price as order_price",
             "{$alias}.quantity as order_quantity", 
-            "{$alias}.currency_id as order_currency", 
+            "{$alias}.currency_id as order_currency",
+            "Order.discount as order_discount",
             # "currency_doc.pagetitle as order_currency_code", 
         ));
         # 

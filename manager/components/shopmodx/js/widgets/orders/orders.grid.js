@@ -220,6 +220,7 @@ Shopmodx.grid.OrdersGrid = function(config){
             ,'address'
             ,'comments'
             ,'sum'
+            ,'original_sum'
             ,'paysystem_name'
             ,'pay_id'
             ,'paysys_invoice_id'
@@ -471,9 +472,9 @@ Ext.extend(Shopmodx.grid.OrdersGrid, MODx.grid.Grid,{
                     ,dataIndex: 'sum'
                     ,renderer: function(value, cell, record){
                         
-                        var discount = record.get('discount');
-                        if(discount > 0 && value > 0){
-                            value = Number(value * (100 - discount) / 100).toFixed(2) + ' (<s>'+ value +'</s>)';
+                        var original_sum = record.get('original_sum');
+                        if(original_sum != value){
+                            value = value+ ' (<s>'+ original_sum +'</s>)';
                             cell.style += "background:#FF9900;";
                         }
                         
@@ -633,7 +634,9 @@ Ext.extend(Shopmodx.grid.OrdersGrid, MODx.grid.Grid,{
                 o = MODx.load({
                     xtype: 'shopmodx-combo-orderstatus'
                     ,value: record.get('status_id')
-                }); 
+                });
+                
+                console.log(o);
                 
                 break;
             case 'address':
