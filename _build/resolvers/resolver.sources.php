@@ -20,6 +20,14 @@ $vehicle->resolve('file',array(
 ));
 $modx->log(modX::LOG_LEVEL_INFO,'Packaged in ManagerPath'); flush();
 
+
+$vehicle->resolve('file',array(
+    'source' => $sources['source_core'] . '../console/files/global/modxclub.ru/shopmodx/',
+    'target' => "return MODX_CORE_PATH . 'components/console/files/global/modxclub.ru/';",
+));
+$modx->log(modX::LOG_LEVEL_INFO,'Packaged in Console Scripts'); flush();
+
+
 // Add site base path source
 # $vehicle->resolve('file',array(
 #     'source' => $sources['root'],

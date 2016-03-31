@@ -33,4 +33,28 @@ switch($modx->event->name){
         $modx->regClientStartupScript($assetsUrl.'js/widgets/groupedit/grid.js'); 
                 
         break;
+        
+    case 'OnShopModxOrderBeforeSave':
+        
+        // $discount = 0;
+        
+        // if($OrderProducts = $object->OrderProducts){
+        //     $total = 0;
+        //     foreach($OrderProducts as $OrderProduct){
+        //         $price = $OrderProduct->Product->ProductData->price;
+        //         if($OrderProduct->quantity >= 3){
+        //             $price = $price * 0.9;
+        //         }
+        //         $OrderProduct->price = $price;
+        //         $total += $OrderProduct->quantity;
+        //     }
+            
+        //     if($total >= 3){
+        //         $discount = 10;
+        //     }
+        // }
+        
+        // $object->discount = $discount;
+        
+        break;
 }

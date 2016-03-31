@@ -2,6 +2,7 @@
 
 require_once MODX_CORE_PATH . 'components/modxsite/processors/site/web/object.class.php';
 
+
 class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
     
     public $classKey = 'ShopmodxOrder';
@@ -69,6 +70,7 @@ class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
     
     
     protected function hasObjectPermission(){
+        global $site_id;
         
         /*
             Проверяем права на объект
@@ -98,9 +100,13 @@ class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
                 }
             }
             else{
-                if($_SESSION['order_id'] == $this->object->id){
+                if(isset($_SESSION['order_id']) AND $_SESSION['order_id'] == $this->object->id){
                     $allow = true;
                 }
+            }
+            
+            if(!$allow AND $site_id == $this->getProperty('site_id')){
+                $allow = true;
             }
         }
         
@@ -212,6 +218,23 @@ class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
             ));
         }
         
+        if(
+            $OnPrepareObject = $this->modx->invokeEvent("OnShopModxOrderBeforeSave",array(
+                'object' => & $this->object,
+            ))
+            AND is_array($OnPrepareObject)
+        ){
+            
+            # var_dump($OnPrepareObject);
+            foreach($OnPrepareObject as $response){
+                $prepared = $this->processEventResponse($response);
+                if (!empty($prepared)) {
+                    return $prepared;
+                }
+            }
+        }
+        
+        
         return parent::beforeSave();
     }
     
@@ -231,5 +254,6 @@ class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
         return parent::cleanup();
     }
 }
+
 
 return 'modShopmodxOrdersObjectProcessor';

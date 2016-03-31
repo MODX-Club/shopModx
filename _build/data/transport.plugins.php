@@ -29,6 +29,13 @@ if(!empty($content)){
    'propertyset' => 0,
   ),'',true,true);
   
+  $events['OnShopModxOrderBeforeSave'] = $modx->newObject('modPluginEvent');
+  $events['OnShopModxOrderBeforeSave'] -> fromArray(array(
+   'event' => 'OnShopModxOrderBeforeSave',
+   'priority' => 0,
+   'propertyset' => 0,
+  ),'',true,true);
+  
   $plugin->addMany($events, 'PluginEvents');
   
   $modx->log(xPDO::LOG_LEVEL_INFO,'Packaged in '.count($events).' Plugin Events.'); flush();
