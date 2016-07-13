@@ -66,7 +66,11 @@ class modShopmodxPublicActionProcessor extends modProcessor{
                     require_once dirname(dirname(__FILE__)) . '/orders/empty.class.php';                    
                     self::$actualClassName =  'modBasketWebOrdersEmptyProcessor';
                     break;
-                    
+                
+                case 'login':
+                    require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/modxsite/processors/web/users/login.class.php';
+                    self::$actualClassName = "modWebUsersLoginProcessor";
+                    break;
                 
                 default:;
             }
