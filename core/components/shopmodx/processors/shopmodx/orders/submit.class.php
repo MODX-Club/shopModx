@@ -321,7 +321,7 @@ class modShopmodxOrdersSubmitProcessor extends modShopmodxOrdersObjectProcessor{
         return $this->modx->smarty->fetch($tpl);
     }
     
-    public function cleanup() {
+    public function cleanup($msg = '') {
         
         // автоматическая авторизация для нового пользователя
         if(

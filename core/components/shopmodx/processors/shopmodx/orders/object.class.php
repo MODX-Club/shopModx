@@ -69,6 +69,19 @@ class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
     }
     
     
+    public function prepareQueryBeforeCount(xPDOQuery $c){
+        $c = parent::prepareQueryBeforeCount($c);
+        
+        $where = array(
+            "status_id:!=" => 7,
+        );
+        
+        $c->where($where);
+        
+        return $c;
+    }
+    
+    
     protected function hasObjectPermission(){
         global $site_id;
         
@@ -146,9 +159,12 @@ class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
             $quantity += $OrderProduct->quantity;
             $sum += $OrderProduct->quantity * $OrderProduct->price;
             $products_ids[] = $OrderProduct->product_id;
-            $OrderProduct->set('_Product', $OrderProduct->Product->toArray());
-            $OrderProductsData[$OrderProduct->id] = $OrderProduct->toArray();
             
+            if($Product = $OrderProduct->Product){
+                $OrderProduct->set('_Product', $OrderProduct->Product->toArray());
+            }
+            
+            $OrderProductsData[$OrderProduct->id] = $OrderProduct->toArray();
         }
         
         $original_sum = $sum;
@@ -204,6 +220,40 @@ class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
     }
     
     
+    public function beforeSet(){
+        
+        /*
+            Проверяем, можно ли очищать корзину.
+            Можно только если статус - новый
+        */
+        
+        # print_r($this->object->toArray());
+        # 
+        # return 'Debug';
+        
+        // Проверка на изменение статусов
+        switch($this->getProperty('status_id')){
+            
+            case 7:
+                
+                if($this->object->get('status_id') != '1'){
+                    $error = "Данную корзину нельзя очистить";
+                    
+                    $this->modx->log(xPDO::LOG_LEVEL_ERROR, __CLASS__ . " - {$error}");
+                    $this->modx->log(xPDO::LOG_LEVEL_ERROR, print_r($this->getProperties(), true));
+                    
+                    return $error;
+                }
+                break;
+            
+            default:;
+        }
+        
+        
+        return parent::beforeSet();
+    }
+    
+    
     public function beforeSave(){
         
         if($this->object->isNew()){
@@ -216,6 +266,10 @@ class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
                 "editedon"  => time(),
                 "editedby"  => $this->modx->user->id,
             ));
+            
+            if($this->object->isDirty('status_id')){
+                $this->object->number_history++;
+            }
         }
         
         if(
@@ -247,11 +301,11 @@ class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
         return parent::success($msg, $object);
     }
     
-    public function cleanup(){
+    public function cleanup($msg = ''){
         
         $this->modx->shopmodx->setActiveOrderID($this->object->id);
         
-        return parent::cleanup();
+        return $this->success($msg, $this->object->toArray());
     }
 }
 

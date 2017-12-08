@@ -1,15 +1,16 @@
 <?php
 
-require_once dirname(__FILE__). '/object.class.php';
+require_once dirname(__FILE__). '/update.class.php';
 
 
-class modShopmodxOrdersAddproductProcessor extends modShopmodxOrdersObjectProcessor{
+class modShopmodxOrdersAddproductProcessor extends modShopmodxOrdersUpdateProcessor{
     
     
     public function initialize(){
         
-        $this->setProperties(array(
-            "save_object"   => true,
+        $this->setDefaultProperties(array(
+            # "save_object"   => true,
+            "new_object"   => true,
         ));
         
         $this->setDefaultProperties(array(
@@ -128,16 +129,16 @@ class modShopmodxOrdersAddproductProcessor extends modShopmodxOrdersObjectProces
         return true;
     }
     
-    public function cleanup() {
+    
+    # public function cleanup() {
+    #     
+    #     return $this->success('Товар добавлен в корзину', $this->object->toArray());
+    # } 
+    
+    public function cleanup($msg = '') {
         
-        $result = parent::cleanup();
-        
-        if(is_array($result)){
-            $result['message'] = "Товар успешно добавлен в корзину";
-        }
-        
-        return $result;
-    }
+        return parent::cleanup('Товар добавлен в корзину');
+    } 
     
 #     public function beforeSave(){
 #         

@@ -64,7 +64,7 @@ class modShopmodxPublicActionProcessor extends modProcessor{
                     
                 case 'empty_basket':
                     require_once dirname(dirname(__FILE__)) . '/orders/empty.class.php';                    
-                    self::$actualClassName =  'modBasketWebOrdersEmptyProcessor';
+                    self::$actualClassName =  'modShopmodxOrdersEmptyProcessor';
                     break;
                 
                 case 'login':
