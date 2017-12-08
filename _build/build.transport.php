@@ -10,7 +10,7 @@ define('NAMESPACE_NAME', PKG_NAME_LOWER);
 define('PKG_PATH', PKG_NAME_LOWER);
 define('PKG_CATEGORY', PKG_NAME);
 
-$pkg_version = '2.1.0';
+$pkg_version = '2.1.1';
 $pkg_release = 'beta';
 define('PKG_VERSION', $pkg_version);
 define('PKG_RELEASE', $pkg_release);

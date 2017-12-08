@@ -319,7 +319,7 @@ class modShopmodxOrdersSubmitProcessor extends modShopmodxOrdersObjectProcessor{
         return $this->modx->smarty->fetch($tpl);
     }
     
-    public function cleanup() {
+    public function cleanup($msg = '') {
         
         // Сбрассываем сессию
         unset($_SESSION['order_id']);
