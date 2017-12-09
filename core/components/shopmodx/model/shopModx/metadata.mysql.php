@@ -48,12 +48,24 @@ $custom_fields = array(
             "price"  => array(
                 "defaultValue"  => 0,
                 "metaData"  => array (
+                    'default' => 0,
                     'dbtype' => 'decimal',
                     'precision' => '10,2',
                     'attributes' => 'unsigned',
                     'phptype' => 'float',
                     'null' => false,
                     'index' => 'index',
+                ),
+            ),
+            "price_old"  => array(
+                "defaultValue"  => null,
+                "metaData"  => array (
+                    'default' => null,
+                    'dbtype' => 'decimal',
+                    'precision' => '10,2',
+                    'attributes' => 'unsigned',
+                    'phptype' => 'float',
+                    'null' => true,
                 ),
             ),
             "article"  => array(
