@@ -20,6 +20,7 @@ if ($object->xpdo) {
             
             // adding xPDO objects fields
             $manager->addField('modResource', 'price');
+            $manager->addField('modResource', 'price_old');
             $manager->addField('modResource', 'article');
             $manager->addField('modResource', 'currency');
             
