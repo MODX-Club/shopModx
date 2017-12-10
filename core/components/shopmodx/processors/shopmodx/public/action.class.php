@@ -10,6 +10,38 @@ class modShopmodxPublicActionProcessor extends modProcessor{
     
     public static function getInstance(modX &$modx,$className,$properties = array()) {
         
+        
+        $request_body = file_get_contents('php://input');
+
+        if($request_body AND $data = json_decode($request_body, 1)){
+            $properties = array_merge($properties, $data);
+        }
+        
+        foreach($properties as $field => & $value){
+
+            if(!is_scalar($value)){
+                continue;
+            }
+
+            $v = (string)$value;
+
+            if($v === "null"){
+                $value = null;
+            }
+            else if($v === "true"){
+                $value = true;
+            }
+            else if($v === "false"){
+                $value = false;
+            }
+            else if($v === "NaN"){
+                unset($properties[$field]);
+            }
+            else if($v === "undefined"){
+                unset($properties[$field]);
+            }
+        }
+
         // Удаляем параметр корзины
         unset($properties['order_id']);
         
@@ -66,11 +98,7 @@ class modShopmodxPublicActionProcessor extends modProcessor{
                     require_once dirname(dirname(__FILE__)) . '/orders/empty.class.php';                    
                     self::$actualClassName =  'modShopmodxOrdersEmptyProcessor';
                     break;
-                
-                case 'login':
-                    require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/modxsite/processors/web/users/login.class.php';
-                    self::$actualClassName = "modWebUsersLoginProcessor";
-                    break;
+                    
                 
                 default:;
             }
