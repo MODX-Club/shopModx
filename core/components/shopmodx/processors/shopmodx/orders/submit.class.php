@@ -28,6 +28,10 @@ class modShopmodxOrdersSubmitProcessor extends modShopmodxOrdersObjectProcessor{
     
     public function initialize() {
         
+        if($params = (array)$this->getProperty("params")){
+            $this->setProperties($params);
+        }
+
         $this->setDefaultProperties(array(
             "new_object"   => false,        // Флаг, что это новый объект
             "save_object"   => true,       // Флаг, что объект надо сохранять
@@ -35,7 +39,6 @@ class modShopmodxOrdersSubmitProcessor extends modShopmodxOrdersObjectProcessor{
         
         $this->setProperties(array(
             "status_id"   => 2, 
-            "autosignin" => $this->modx->getOption("shopmodx.autosignin_new_customers", null, true),
         ));
         
         return parent::initialize();
@@ -203,7 +206,6 @@ class modShopmodxOrdersSubmitProcessor extends modShopmodxOrdersObjectProcessor{
             $contractor = $this->modx->newObject('modUser', array(
                 'active' => 1,
                 'username' => $email,
-                "new"       => 1,
             ));
             
             // Создаем профиль пользователя
@@ -246,6 +248,7 @@ class modShopmodxOrdersSubmitProcessor extends modShopmodxOrdersObjectProcessor{
             $response = $this->modx->runProcessor('shopmodx/orders/products/getdata',
                 array(
                     "order_id"  => $this->object->get('id'),
+                    "format"    => "",
                 ), array(
                     'processors_path' => dirname(dirname(dirname(__FILE__))).'/',
                 )
@@ -321,17 +324,7 @@ class modShopmodxOrdersSubmitProcessor extends modShopmodxOrdersObjectProcessor{
         return $this->modx->smarty->fetch($tpl);
     }
     
-    public function cleanup($msg = '') {
-        
-        // автоматическая авторизация для нового пользователя
-        if(
-            !$this->modx->user->id 
-            AND $this->object->Contractor
-            AND $this->object->Contractor->new
-            AND $this->getOption("autosignin")
-        ){
-            $this->object->Contractor->addSessionContext($this->modx->context->key);
-        }
+    public function cleanup() {
         
         // Сбрассываем сессию
         unset($_SESSION['order_id']);

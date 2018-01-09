@@ -19,7 +19,7 @@ class modShopmodxOrdersEmptyProcessor extends modShopmodxOrdersUpdateProcessor{
     }
     
     
-    public function cleanup($msg = '') {
+    public function cleanup() {
         
         // Сбрассываем сессию
         unset($_SESSION['order_id']);

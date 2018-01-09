@@ -9,6 +9,8 @@ class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
     
     public function initialize() {
         
+        // print_r($this->properties);
+
         $this->unsetProperty('id');
         
         $order_id = $this->modx->shopmodx->getActiveOrderID();
@@ -28,8 +30,17 @@ class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
                 'id'    => $order_id,
             ));
         }
+
+        $this->unsetProperty("contractor");
+        $this->unsetProperty("createdby");
+        $this->unsetProperty("createdon");
+        // $this->unsetProperty("discount");
+        $this->unsetProperty("editedby");
+        $this->unsetProperty("editedon");
+        $this->unsetProperty("manager");
+        $this->unsetProperty("number_history");
         
-        # print_r($this->properties);
+        // print_r($this->properties);
         
 #         $this->initializeObject();
 #         
@@ -72,6 +83,12 @@ class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
     public function prepareQueryBeforeCount(xPDOQuery $c){
         $c = parent::prepareQueryBeforeCount($c);
         
+        $alias = $c->getAlias();
+
+        $c->select(array(
+            "{$alias}.*",
+        ));
+
         $where = array(
             "status_id:!=" => 7,
         );
@@ -105,7 +122,7 @@ class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
         // Иначе проверяем пользователей
         else{
             if($user->id){
-                if($object->contractor == $user->id){
+                if($object->contractor == $user->id || $object->createdby == $user->id){
                     $allow = true;
                 }
                 else if($this->modx->hasPermission('shopmodx.edit_orders')){
@@ -161,7 +178,19 @@ class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
             $products_ids[] = $OrderProduct->product_id;
             
             if($Product = $OrderProduct->Product){
-                $OrderProduct->set('_Product', $OrderProduct->Product->toArray());
+                // print_r($OrderProduct->Product->toArray());
+                $image = $OrderProduct->Product->getTVValue(7);
+
+                $OrderProduct->fromArray(array(
+                    "price_old" => $OrderProduct->Product->price_old,
+                ));
+
+                $OrderProduct->set('_Product', array_merge(
+                    $OrderProduct->Product->toArray(),
+                    array(
+                        "image" => $image ? "{$image}" : "assets/images/products/No-Photo.jpg",
+                    )
+                ));
             }
             
             $OrderProductsData[$OrderProduct->id] = $OrderProduct->toArray();
@@ -173,7 +202,7 @@ class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
             $sum = round($sum * ((100 - $object->discount) / 100), 2);
         }
         
-        $object->set('_OrderProducts', $OrderProductsData);
+        $object->set('_OrderProducts', array_values((array)$OrderProductsData));
         
         $object->fromArray(array(
             "positions" => $positions,
@@ -291,6 +320,14 @@ class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
         
         return parent::beforeSave();
     }
+
+
+    public function afterSave() { 
+
+        $this->object = $this->modx->getObject($this->classKey, $this->object->id);
+
+        return parent::afterSave(); 
+    }
     
     public function success($msg = '',$object = null) {
         
@@ -301,12 +338,13 @@ class modShopmodxOrdersObjectProcessor extends modSiteWebObjectProcessor{
         return parent::success($msg, $object);
     }
     
-    public function cleanup($msg = ''){
+    // public function cleanup($msg = ''){
         
-        $this->modx->shopmodx->setActiveOrderID($this->object->id);
+    //  // Устанавливает ID в сессию, поэтому нельзя его вызывать кроме как в создании заказа
+    //     $this->modx->shopmodx->setActiveOrderID($this->object->id);
         
-        return $this->success($msg, $this->object->toArray());
-    }
+    //     return $this->success($msg, $this->object);
+    // }
 }
 
 

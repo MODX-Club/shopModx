@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL ^E_NOTICE);
+ini_set('display_errors', true);
+
 $pkg_name = 'shopModx';
 
 /* define package */
@@ -10,7 +13,7 @@ define('NAMESPACE_NAME', PKG_NAME_LOWER);
 define('PKG_PATH', PKG_NAME_LOWER);
 define('PKG_CATEGORY', PKG_NAME);
 
-$pkg_version = '2.1.1';
+$pkg_version = '2.2.0';
 $pkg_release = 'beta';
 define('PKG_VERSION', $pkg_version);
 define('PKG_RELEASE', $pkg_release);

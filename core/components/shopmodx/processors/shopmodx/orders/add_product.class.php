@@ -90,6 +90,20 @@ class modShopmodxOrdersAddproductProcessor extends modShopmodxOrdersUpdateProces
         
         return parent::beforeSet();
     }
+
+    public function afterSave(){
+
+        $object = & $this->object;
+
+        if($this->getProperty("new_object")){
+
+            $_SESSION['order_id'] = $object->id;
+
+        }
+
+
+        return parent::afterSave();
+    }
     
     
     protected function setOrderProductData($OrderProduct){

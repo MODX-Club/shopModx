@@ -36,7 +36,7 @@ class modShopmodxOrdersUpdatefromgridProcessor extends modShopmodxOrdersUpdatePr
         return parent::afterSave();
     }
     
-    public function cleanup($msg = '') {
+    public function cleanup() {
         
         $processor = new modShopmodxOrdersGetlistProcessor($this->modx, array(
             'grid' => 0,

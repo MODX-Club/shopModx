@@ -21,7 +21,10 @@ class modShopmodxOrdersProductsGetdataProcessor extends modShopmodxGetdataProces
         
         $where = array();
         
-        if($order_id = (int)$this->getProperty('order_id')){
+        if(
+            $order_id = (int)$this->getProperty('order_id')
+            OR $order_id = (int)$this->getProperty('order')
+        ){
             $where['order_id'] = $order_id;
         }
         
@@ -132,26 +135,28 @@ class modShopmodxOrdersProductsGetdataProcessor extends modShopmodxGetdataProces
         return $list;
     }
     
-    public function outputArray(array $array, $count = false){
-        $result = parent::outputArray($array, $count);
+    // public function outputArray(array $array, $count = false){
+    //     $result = parent::outputArray($array, $count);
         
-        $result['sum'] = $this->sum;
-        $result['original_sum'] = $this->original_sum;
-        $result['discount'] = $this->discount;
-        $result['quantity'] = $this->quantity;
-        $result['positions'] = $count;
+    //     print_r($result);
+
+    //     $result['sum'] = $this->sum;
+    //     $result['original_sum'] = $this->original_sum;
+    //     $result['discount'] = $this->discount;
+    //     $result['quantity'] = $this->quantity;
+    //     $result['positions'] = $count;
         
         
-        # $array['sum'] = $this->sum;
-        # $array['original_sum'] = $this->original_sum;
-        # $array['discount'] = $this->discount;
-        # $array['quantity'] = $this->quantity;
-        # $array['positions'] = $count;
-        # 
-        # $result = parent::outputArray($array, $count);
+    //     # $array['sum'] = $this->sum;
+    //     # $array['original_sum'] = $this->original_sum;
+    //     # $array['discount'] = $this->discount;
+    //     # $array['quantity'] = $this->quantity;
+    //     # $array['positions'] = $count;
+    //     # 
+    //     # $result = parent::outputArray($array, $count);
         
-        return $result;
-    }    
+    //     return $result;
+    // }    
     
 }
 

@@ -41,36 +41,51 @@ class modShopmodxOrdersRecalculateProcessor extends modShopmodxOrdersObjectProce
 #             return $this->modx->lexicon('access_denied');
 #         }
 
-        if(!$this->getProperty('quantity')){
-            return "Не указано количество товаров в заказе";
-        }
-
         return parent::initialize();
     }
     
     
     public function beforeSave(){
         
-        $quantity = (array)$this->getProperty('quantity');
+        $position_id = (int)$this->getProperty('position_id');
+        $quantity = (int)$this->getProperty('quantity');
         
+        if(!$position_id){
+            return "Не указан ID товароной позиции";
+        }
+
+        if(!isset($quantity)){
+            return "Не указано количество товаров в заказе";
+        }
+
+        // $this->modx->log(1, print_r($this->object->toArray(), 1), "FILE");
+
         $OrderProducts = $this->object->OrderProducts;
         
         foreach($OrderProducts as & $OrderProduct){
-            $OrderProduct->quantity = isset($quantity[$OrderProduct->id]) ? $quantity[$OrderProduct->id] : 0;
-            # print_r($OrderProduct->toArray());
+
+            if($OrderProduct->id != $position_id){
+                continue;
+            }
+            
+            $OrderProduct->quantity = $quantity;
+
         }
         
         unset($OrderProduct);
-        
-        # print count($OrderProducts);
         
         return parent::beforeSave();
     }
     
     
+    // public function cleanup() {
+        
+    //     return $this->success('Корзина пересчитана', $this->object->toArray());
+    // } 
+    
     public function cleanup($msg = '') {
         
-        return $this->success('Корзина пересчитана', $this->object->toArray());
+        return parent::cleanup('Корзина пересчитана');
     } 
     
 }

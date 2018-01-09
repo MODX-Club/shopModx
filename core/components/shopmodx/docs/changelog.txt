@@ -1,3 +1,13 @@
+shopModx-2.2.0-beta
+========================================
+- Added price_old model
+- Added file_get_contents('php://input') params parse in public/action
+- Added re-initialize Order object in orders/object::afterSave processor
+- Added orders/own/object processor
+- Minor bugfix
+- Actualized for ShopModxBox-4.0
+
+
 shopModx-2.1.1-beta
 ========================================
 - Added empty basket processor

@@ -9,7 +9,7 @@ class modShopmodxGetdataProcessor extends modSiteWebGetdataProcessor{
         
         $this->setDefaultProperties(array(
             "grid"  => false,
-            "format"  => '',
+            "format"  => 'json',
         ));
         
         return parent::initialize();

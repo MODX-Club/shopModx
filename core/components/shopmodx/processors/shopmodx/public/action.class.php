@@ -53,6 +53,8 @@ class modShopmodxPublicActionProcessor extends modProcessor{
         # print $action;
         # 
         # exit;
+
+        $modx->log(1, print_r($properties,1), "FILE");
         
         // Здесь мы имеем возможность переопределить реальный класс процессора
         if($action AND !self::$actualClassName){
@@ -72,10 +74,27 @@ class modShopmodxPublicActionProcessor extends modProcessor{
                     break;
                 
                 // Это чисто для Ajax-а. Состояние корзины
+                // case 'getdata':
+                // case 'orders/getdata':
+                //     require_once dirname(dirname(__FILE__)) . '/orders/object.class.php';                    
+                //     self::$actualClassName =  'modShopmodxOrdersObjectProcessor';
+                //     break;
+
                 case 'getdata':
                 case 'orders/getdata':
-                    require_once dirname(dirname(__FILE__)) . '/orders/object.class.php';                    
-                    self::$actualClassName =  'modShopmodxOrdersObjectProcessor';
+                    require_once dirname(dirname(__FILE__)) . '/orders/getdata.class.php';                    
+                    self::$actualClassName =  'modShopmodxOrdersGetdataProcessor';
+                    break;
+
+                // Текущий заказ пользователя
+                case 'order/own/getdata':
+                    require_once dirname(dirname(__FILE__)) . '/orders/own/object.class.php';                    
+                    self::$actualClassName =  'modShopmodxOrdersOwnObjectProcessor';
+                    break;
+
+                case 'orders/products/getdata':
+                    require_once dirname(dirname(__FILE__)) . '/orders/products/getdata.class.php';                    
+                    self::$actualClassName =  'modShopmodxOrdersProductsGetdataProcessor';
                     break;
                 
                 case 'products_remove':

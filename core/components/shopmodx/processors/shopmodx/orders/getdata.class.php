@@ -29,6 +29,9 @@ class modShopmodxOrdersGetdataProcessor extends modShopmodxGetdataProcessor{
                 "contractor"    => $this->modx->user->id,
             ));
         }
+
+        // return json_encode(print_r($this->modx->user->toArray(), 1));
+        // return json_encode(print_r($this->properties, 1));
         
         return parent::initialize();
     }

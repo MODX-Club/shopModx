@@ -49,6 +49,7 @@ $xpdo_meta_map['ShopmodxOrderProduct']= array (
     ),
     'currency_id' => 
     array (
+      'default' => null,
       'dbtype' => 'int',
       'precision' => '10',
       'attributes' => 'unsigned',
