@@ -1,3 +1,8 @@
+shopModx-2.2.1-beta
+========================================
+- Code cleanup
+
+
 shopModx-2.2.0-beta
 ========================================
 - Added price_old model
