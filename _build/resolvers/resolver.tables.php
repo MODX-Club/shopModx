@@ -41,14 +41,14 @@ if ($object->xpdo) {
             $statuses = array(
                 array(
                     "id"        => 1,
-                    "status"    => "Новый",
+                    "status"    => "Наполняется",
                     "color"     => "",
                     "rank"      => 0,
                     "comment"   => "Неоформленный заказ еще на стадии наполнения корзины"
                 ),
                 array(
                     "id"        => 2,
-                    "status"    => "Оформлен",
+                    "status"    => "Новый",
                     "color"     => "#FFCC99",
                     "rank"      => 0,
                     "comment"   => "Пользователь оформил заказ"
